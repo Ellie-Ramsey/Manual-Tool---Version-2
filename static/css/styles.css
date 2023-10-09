@@ -1,0 +1,145 @@
+/* MAIN CONTENT */
+.left {
+    float: left;
+    width: 29%;
+    height: 100%;
+    margin-top: 10px;
+}
+
+.right {
+    float: right;
+    width: 70%;
+    height: 100%;
+    margin-top: 10px;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.history {
+    min-height: auto;
+    border-top:rgb(5, 0, 39) solid 2px;
+}
+
+.accordion-body {
+    word-wrap: break-word;
+  }
+
+.input-output {
+    width: 80%;
+    height: 60px;
+    margin: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.btn {
+    background-color: rgb(48, 48, 97);
+    color: white;
+}
+
+
+.btn:hover{
+    background-color: rgb(92, 92, 154);
+    color: white;
+}
+
+
+
+
+
+/* TABLE CSS */
+table.wrap-text-table td {
+    max-width: 150px;
+    word-wrap: break-word;
+    white-space: normal !important;
+    
+}
+
+th, td {
+    height: 30px; /* Set the height of the rows */
+    text-align: center; /* Center the text */
+    max-width: 150px;
+    word-wrap: break-word;
+    white-space: normal !important;
+}
+
+
+/* MODAL CSS */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+  }
+  
+  .modal-content {
+      position: relative;
+      margin: 10% auto;
+      margin-top: 5%;
+      padding: 20px;
+      width: 80%;
+      height: 80%;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+      background-color: #fefefe;
+  }
+  
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  
+    
+/* TAB STYLING */
+    .tablink {
+      background-color: #555;
+      color: white;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 17px;
+      width: 20%;
+      margin: 5px;
+    }
+
+    .tablink:hover {
+      background-color: #777;
+    }
+
+    .tabcontent {
+      color: rgb(0, 0, 0);
+      display: none;
+      padding: 30px 20px;
+      height: 100%;
+    }
+
+    #Story {background-color: rgb(255, 255, 255);}
+    #Timeline {background-color: rgb(255, 255, 255);}
+
+
+    .standard-dropdown {
+        min-width: 30px;
+        max-width: 200px;;
+    }
+
+    label {
+        font-weight: bold;
+    }

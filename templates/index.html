@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Demonstration of ChatGPT API in a Python Flask Application for Ramsey Systems.">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <title>Ramsey Systems Prototype</title>
+  </head>
+
+<body>
+
+
+<!-- page header start -->
+<header>
+  <nav class="navbar fixed-top navbar-light bg-light">
+      <a class="navbar-brand" href="#" style="margin-left: 10px;">
+        <img src="{{ url_for('static', filename='images/RSLogo.png') }}"  height="30px;" class="d-inline-block align-top" alt="" style="margin-right: 10px;">
+        Ramsey Systems: Example Patient Creator
+      </a>
+    </nav>
+</header>
+
+<!-- page content start -->
+<main class="flex-shrink-0">
+  <br>
+  <br>
+  <br>
+  <div class="input-output" style="display: flex; justify-content: space-between; align-items: center; width: 60%;">
+
+    <label>
+      Upload Standards List: 
+      <input type="file" id="standardsFileLoadButton"/>
+    </label>
+
+      <button class="btn" id="saveAllJSONButton">Save JSONs</button>
+
+  </div>
+
+  <div class="input-output" style="display: flex; justify-content: space-between; align-items: center; width: 60%;">
+
+  <label> Upload Story Json: 
+    <input type="file" id="importStory" accept=".json"/>
+    </label>
+
+    <label>
+      Upload Timeline Json:
+    <input type="file" id="importFiles" multiple>
+    <button id="processFilesBtn">Process Files</button>
+    </label>
+
+  </div>
+
+  <button class="tablink btn" onclick="openPage('Story', this, 'grey')" id="defaultOpen" style="margin-left: 15px;">Story Editor</button>
+
+ <div id="Story" class="tabcontent">
+    <br>
+    <br>
+    
+    <div class="container">
+
+      <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624);"></textarea>
+      <br>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th style="width:33%;">Summary</th>
+            <th style="width:33%;">Rationale</th>
+            <th style="width:34%;">Story</th>
+          </tr>
+        </thead>
+        <tbody id="storyTableBody">
+          <tr id="row-1" data-id="1">
+            <td data-key="Summary" contentEditable="true"></td>
+            <td data-key="Rationale" contentEditable="true"></td>
+            <td data-key="Story" contentEditable="true"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  
+  <div class="container">
+
+    <textarea class="form-control" id="timelineTextArea" style="height: 150px; background-color: rgba(241, 241, 241, 0.624);"></textarea>
+    <br>
+        
+    <button id="addBlankRowBtn" class="btn">Add Blank Row</button>
+    <br>
+    <br>
+  
+    <div class="container">
+        <table class="table wrap-text-table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 150px;">Date/Time</th>
+                    <th scope="col" style="width: 150px;">Event</th>
+                    <th scope="col" style="width: 150px;">Data Items</th>
+                    <th scope="col" style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="timelineTableBody">
+            </tbody>
+        </table>
+    </div>
+  
+    <div id="editModal" class="modal">
+      <br>
+        <div class="modal-content">
+  
+          <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+          <button onclick="addLinkedDataRow()" class="btn btn-outline-dark" style="width: 120px;">Add Row</button>
+          <select id="standardsDropdown" class="standard-dropdown"></select>
+          <button id="closeLinkedData" class="btn btn-outline-dark" style="width: 80px;">Close</button>
+          </div>
+  
+          <br>
+            <table class="table wrap-text-table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 150px;">Data Path</th>
+                        <th style="width: 150px;">Example Data</th>
+                        <th style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="linkedDataTableBody">
+                </tbody>
+            </table>
+            
+            <button id="deleteDataItem" class="btn btn-outline-dark" onclick="resetLinkedData()" style="width: 80px;">Delete</button>
+            
+          </div>
+        </div>
+
+</div>
+</div>
+
+</main>
+
+<!-- scripts start -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  </body>
+</html>

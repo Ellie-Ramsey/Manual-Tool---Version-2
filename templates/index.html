@@ -59,10 +59,11 @@
   <br>    
     <div class="container top">
 
-      <h3>Story Table</h3>
+      <input type="checkbox" id="toggleStoryText">
+      <h3 class="inline-header">Story Table</h3>
       
 
-      <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624);"></textarea>
+      <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624); display: none;"></textarea>
       <br>
       <table class="table table-bordered">
         <thead>
@@ -87,9 +88,10 @@
   
   <div class="container">
 
-    <h3>Timeline Table</h3>
+    <input type="checkbox" id="toggleTimelineText">
+    <h3 class="inline-header">Timeline Table</h3>
 
-    <textarea class="form-control" id="timelineTextArea" style="height: 150px; background-color: rgba(241, 241, 241, 0.624);"></textarea>
+    <textarea class="form-control" id="timelineTextArea" style="height: 150px; background-color: rgba(241, 241, 241, 0.624);  display: none;"></textarea>
     <br>
         
     <button id="addBlankRowBtn" class="btn">Add Blank Row</button>

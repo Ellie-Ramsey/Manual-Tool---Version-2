@@ -9,24 +9,24 @@ let timelineNextId = 1;
   
 
 
-//////////////////////////NAVBAR//////////////////////////
-//MUltiple Tab Code
-// function openPage(pageName,elmnt,color) {
-//     var i, tabcontent, tablinks;
-//     tabcontent = document.getElementsByClassName("tabcontent");
-//     for (i = 0; i < tabcontent.length; i++) {
-//       tabcontent[i].style.display = "none";
-//     }
-//     tablinks = document.getElementsByClassName("tablink");
-    
-//     for (i = 0; i < tablinks.length; i++) {
-//       tablinks[i].style.backgroundColor = "";
-//     }
+//////////////////////////TextAreas Show/ Hide//////////////////////////
+document.getElementById('toggleStoryText').addEventListener('change', function() {
+  var textArea = document.getElementById('storyTextArea');
+  if(this.checked) {
+      textArea.style.display = 'block'; // show text area
+  } else {
+      textArea.style.display = 'none'; // hide text area
+  }
+});
 
-//     document.getElementById(pageName).style.display = "block";
-//     elmnt.style.backgroundColor = color;
-//   }
-//   document.getElementById("defaultOpen").click();
+document.getElementById('toggleTimelineText').addEventListener('change', function() {
+  var textArea = document.getElementById('timelineTextArea');
+  if(this.checked) {
+      textArea.style.display = 'block'; // show text area
+  } else {
+      textArea.style.display = 'none'; // hide text area
+  }
+});
 
 
 ///////////////////////////STORY//////////////////////////

@@ -21,7 +21,9 @@ h3 {
     text-decoration: underline;
 }
 
-
+.inline-header {
+    display: inline-block;
+}
 
 /* TABLE CSS */
 table.wrap-text-table td {

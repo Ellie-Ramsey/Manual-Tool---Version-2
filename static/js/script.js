@@ -546,16 +546,20 @@ document.addEventListener("DOMContentLoaded", function() {
   function structureTimelineData(rawData) {
     const structuredData = {};
     rawData.forEach((item, index) => {
-      structuredData[index + 1] = {
-        id: index + 1,
-        time: item.time,
-        event: item.event,
-        standard: null,
-        linkedData: []
-      };
+        currentRowId++;  // Incrementing currentRowId for every item
+        timelineNextId = currentRowId + 1;  // Setting timelineNextId to be one more than currentRowId
+
+        structuredData[currentRowId] = {
+            id: currentRowId,
+            time: item.time,
+            event: item.event,
+            standard: null,
+            linkedData: []
+        };
     });
     return structuredData;
-  }
+}
+
 
   function integrateLinkedDataToTimeline(linkedData, timeline_data, fileName) {
     const linkedDataId = parseInt(fileName.split('_')[1], 10);

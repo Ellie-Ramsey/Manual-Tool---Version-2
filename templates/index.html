@@ -36,30 +36,31 @@
     <div class="container top">
 
     <div class="input-group mb-3">
-      <label class="input-group-text" for="standardsFileLoadButton">Standards Upload</label>
+      <label class="input-group-text" for="standardsFileLoadButton" style="width: 160px;">Standards Upload</label>
       <input type="file" class="form-control" id="standardsFileLoadButton">
     </div>
 
 
     <div class="input-group mb-3">
-      <label class="input-group-text" for="importStory">Story JSON</label>
+      <label class="input-group-text" for="importStory" style="width: 160px;">Story JSON</label>
       <input type="file" class="form-control" id="importStory" accept=".json">
     </div>
 
     
     <div class="input-group">
+      <label class="input-group-text" for="importFiles" style="width: 160px;">Timeline Files</label>
       <input type="file" class="form-control" id="importFiles" multiple aria-describedby="inputGroupFileAddon04" aria-label="Upload">
       <button class="btn btn-outline-secondary" type="button" id="processFilesBtn">Upload</button>
     </div>
 
-    <button class="btn" id="saveAllJSONButton" style="margin-top: 13px;">Save JSONs</button>
+    <button class="btn" id="saveAllJSONButton" style="margin-top: 13px; margin-left: 45px;">Save JSONs</button>
 
   </div>
   <br>    
     <div class="container content">
 
       <input type="checkbox" id="toggleStoryText" style="margin-right: 10px;">
-      <h3 class="inline-header">Story Table</h3>
+      <h3 class="inline-header">Story</h3>
       <br>
       
 
@@ -68,15 +69,15 @@
       <table class="table table-bordered">
         <tbody id="storyTableBody">
             <tr id="row-1-summary" data-id="1" data-key="Summary">
-                <th style="width:33%;">Summary</th>
+                <th style="width:30%;">Summary</th>
                 <td contentEditable="true"></td>
             </tr>
             <tr id="row-1-rationale" data-id="1" data-key="Rationale">
-                <th style="width:33%;">Rationale</th>
-                <td contentEditable="true"></td>
+                <th style="width:30%; background-color: rgba(241, 241, 241, 0.624);">Rationale</th>
+                <td contentEditable="true" style="background-color: rgba(241, 241, 241, 0.624);"></td>
             </tr>
             <tr id="row-1-story" data-id="1" data-key="Story">
-                <th style="width:34%;">Story</th>
+                <th style="width:30%;">Story</th>
                 <td contentEditable="true"></td>
             </tr>
         </tbody>
@@ -90,7 +91,7 @@
   <div class="container content">
 
     <input type="checkbox" id="toggleTimelineText" style="margin-right: 10px;">
-    <h3 class="inline-header">Timeline Table</h3>
+    <h3 class="inline-header">Timeline</h3>
     <button id="addBlankRowBtn" class="btn inline-header" style="margin-bottom: 12px; float: right; margin-right: 30px;">Add Blank Row</button>
     <br>
 

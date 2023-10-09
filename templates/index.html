@@ -32,34 +32,35 @@
   <br>
   <br>
   <br>
-  <div class="input-output" style="display: flex; justify-content: space-between; align-items: center; width: 60%;">
 
-    <label>
-      Upload Standards List: 
-      <input type="file" id="standardsFileLoadButton"/>
-    </label>
-
-      <button class="btn" id="saveAllJSONButton">Save JSONs</button>
-
-  </div>
-
-  <div class="input-output" style="display: flex; justify-content: space-between; align-items: center; width: 60%;">
-
-  <label> Upload Story Json: 
-    <input type="file" id="importStory" accept=".json"/>
-    </label>
-
-    <label>
-      Upload Timeline Json:
-    <input type="file" id="importFiles" multiple>
-    <button id="processFilesBtn">Process Files</button>
-    </label>
-
-  </div>
-    <br>
-    <br>
-    
     <div class="container">
+
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="standardsFileLoadButton">Standards Upload</label>
+      <input type="file" class="form-control" id="standardsFileLoadButton">
+    </div>
+
+
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="importStory">Story JSON</label>
+      <input type="file" class="form-control" id="importStory" accept=".json">
+    </div>
+
+    
+    <div class="input-group">
+      <input type="file" class="form-control" id="importFiles" multiple aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+      <button class="btn btn-outline-secondary" type="button" id="processFilesBtn">Upload</button>
+    </div>
+
+    <br>
+    <button class="btn" id="saveAllJSONButton">Save JSONs</button>
+
+  </div>
+  <br>    
+    <div class="container top">
+
+      <h3>Story Table</h3>
+      
 
       <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624);"></textarea>
       <br>
@@ -79,10 +80,14 @@
           </tr>
         </tbody>
       </table>
-    </div>
-    
+
+
+  </div>
+  <br>
   
   <div class="container">
+
+    <h3>Timeline Table</h3>
 
     <textarea class="form-control" id="timelineTextArea" style="height: 150px; background-color: rgba(241, 241, 241, 0.624);"></textarea>
     <br>
@@ -134,7 +139,9 @@
           </div>
         </div>
 
-
+<br>
+<br>
+<br>
 </div>
 
 </main>

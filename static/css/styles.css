@@ -1,37 +1,7 @@
 /* MAIN CONTENT */
-.left {
-    float: left;
-    width: 29%;
-    height: 100%;
-    margin-top: 10px;
-}
-
-.right {
-    float: right;
-    width: 70%;
-    height: 100%;
-    margin-top: 10px;
-}
 
 .container {
     overflow: hidden;
-}
-
-.history {
-    min-height: auto;
-    border-top:rgb(5, 0, 39) solid 2px;
-}
-
-.accordion-body {
-    word-wrap: break-word;
-  }
-
-.input-output {
-    width: 80%;
-    height: 60px;
-    margin: 5px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 
@@ -47,6 +17,9 @@
 }
 
 
+h3 {
+    text-decoration: underline;
+}
 
 
 
@@ -110,6 +83,11 @@ th, td {
         max-width: 200px;;
     }
 
-    label {
-        font-weight: bold;
+
+    .top {
+        padding-top: 20px;
+        border-top:rgb(48, 48, 97);
+        border-style: solid;
+        border-width: 3px 0px 0px 0px;
+        
     }

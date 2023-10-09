@@ -65,22 +65,23 @@
 
       <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624); display: none;"></textarea>
       <br>
-      <table class="table table-bordered table-transposed">
-        <thead>
-          <tr>
-            <th style="width:33%;">Summary</th>
-            <th style="width:33%;">Rationale</th>
-            <th style="width:34%;">Story</th>
-          </tr>
-        </thead>
+      <table class="table table-bordered">
         <tbody id="storyTableBody">
-          <tr id="row-1" data-id="1">
-            <td data-key="Summary" contentEditable="true"></td>
-            <td data-key="Rationale" contentEditable="true"></td>
-            <td data-key="Story" contentEditable="true"></td>
-          </tr>
+            <tr id="row-1-summary" data-id="1" data-key="Summary">
+                <th style="width:33%;">Summary</th>
+                <td contentEditable="true"></td>
+            </tr>
+            <tr id="row-1-rationale" data-id="1" data-key="Rationale">
+                <th style="width:33%;">Rationale</th>
+                <td contentEditable="true"></td>
+            </tr>
+            <tr id="row-1-story" data-id="1" data-key="Story">
+                <th style="width:34%;">Story</th>
+                <td contentEditable="true"></td>
+            </tr>
         </tbody>
-      </table>
+    </table>
+    
 
 
   </div>

@@ -42,13 +42,14 @@ function updateTimelineDisplay() {
 
 //story story_data variable update
 document.getElementById("storyTableBody").addEventListener('input', function (e) {
-  if (e.target && e.target.matches("[data-key]")) {
-    const key = e.target.getAttribute('data-key');
-    // Since story_data is an object, directly update its property
-    story_data[key] = e.target.textContent;
-    updateStoryDisplay(); 
+  if (e.target && e.target.nodeName === "TD") {
+      const row = e.target.closest('tr');
+      const key = row.getAttribute('data-key');
+      story_data[key] = e.target.textContent;
+      updateStoryDisplay();
   }
 });
+
  
 //story history save
 $('#story-history-button').click(function() {
@@ -89,30 +90,41 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('importStory').addEventListener('change', handleFileImport);
 
   function handleFileImport(event) {
-    if (event.target.files.length > 0) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+      if (event.target.files.length > 0) {
+          const file = event.target.files[0];
+          const reader = new FileReader();
 
-        reader.onload = function(e) {
-            story_data = JSON.parse(e.target.result);
-            console.log("Data Imported:", story_data);
-            updateStoryDisplay();
+          reader.onload = function(e) {
+              story_data = JSON.parse(e.target.result);
+              console.log("Data Imported:", story_data);
+              updateStoryDisplay();
 
-            document.querySelectorAll("[data-key='Summary']").forEach(function(cell) { cell.textContent = story_data.Summary; });
-            document.querySelectorAll("[data-key='Rationale']").forEach(function(cell) { cell.textContent = story_data.Rationale; });
-            document.querySelectorAll("[data-key='Story']").forEach(function(cell) { cell.textContent = story_data.Story; });
+              // Updated data import code
+              document.querySelectorAll("[data-key]").forEach(function(row) {
+                  const key = row.getAttribute('data-key');
+                  row.querySelector('td').textContent = story_data[key];
+              });
+          };
 
-        };
+          reader.onerror = function(err) {
+              console.error("Error reading file:", err);
+          };
 
-        reader.onerror = function(err) {
-            console.error("Error reading file:", err);
-        };
-
-        reader.readAsText(file);
-    }
-}
-
+          reader.readAsText(file);
+      }
+  }
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 

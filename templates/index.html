@@ -33,7 +33,7 @@
   <br>
   <br>
 
-    <div class="container">
+    <div class="container top">
 
     <div class="input-group mb-3">
       <label class="input-group-text" for="standardsFileLoadButton">Standards Upload</label>
@@ -52,15 +52,15 @@
       <button class="btn btn-outline-secondary" type="button" id="processFilesBtn">Upload</button>
     </div>
 
-    <br>
-    <button class="btn" id="saveAllJSONButton">Save JSONs</button>
+    <button class="btn" id="saveAllJSONButton" style="margin-top: 13px;">Save JSONs</button>
 
   </div>
   <br>    
-    <div class="container top">
+    <div class="container content">
 
       <input type="checkbox" id="toggleStoryText">
       <h3 class="inline-header">Story Table</h3>
+      <br>
       
 
       <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624); display: none;"></textarea>
@@ -86,18 +86,15 @@
   </div>
   <br>
   
-  <div class="container">
+  <div class="container content">
 
     <input type="checkbox" id="toggleTimelineText">
     <h3 class="inline-header">Timeline Table</h3>
+    <button id="addBlankRowBtn" class="btn inline-header" style="margin-bottom: 12px; float: right; margin-right: 30px;">Add Blank Row</button>
+    <br>
 
     <textarea class="form-control" id="timelineTextArea" style="height: 150px; background-color: rgba(241, 241, 241, 0.624);  display: none;"></textarea>
     <br>
-        
-    <button id="addBlankRowBtn" class="btn">Add Blank Row</button>
-    <br>
-    <br>
-  
     <div class="container">
         <table class="table wrap-text-table table-striped table-bordered">
             <thead>
@@ -141,10 +138,11 @@
           </div>
         </div>
 
-<br>
-<br>
-<br>
 </div>
+
+<br>
+<br>
+<br>
 
 </main>
 

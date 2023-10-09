@@ -50,7 +50,7 @@ th, td {
     .modal {
       display: none; /* Hidden by default */
       position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
+      z-index: 10; /* Sit on top */
       left: 0;
       top: 0;
       width: 100%; /* Full width */
@@ -93,9 +93,11 @@ th, td {
     .top {
         background-color: rgb(255, 255, 255);
         padding: 16px;
+        border-radius: 10px;
     }
 
     .content {
         padding: 16px;
         background-color: rgb(255, 255, 255);
+        border-radius: 10px;
     }

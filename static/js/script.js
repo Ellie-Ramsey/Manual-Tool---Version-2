@@ -134,16 +134,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //timeline standards populate
 function populateStandardsDropdown(standards) {
-  console.log("Populating Standards: ", standards); // Debugging line
+  console.log("Populating Standards: ", standards);
   const dropdown = document.getElementById('standardsDropdown');
-  dropdown.innerHTML = ""; // Clear existing options
+  dropdown.innerHTML = "";
   standards.forEach((standard, index) => {
-    const option = document.createElement('option');
-    option.value = standard;
-    option.textContent = standard;
-    dropdown.appendChild(option);
+      const option = document.createElement('option');
+      option.value = standard;
+      option.textContent = standard;
+      dropdown.appendChild(option);
   });
 }
+
+
+
+
+
+
+
 
 
 function transformMainTimeline(original) {
@@ -272,20 +279,29 @@ document.addEventListener("DOMContentLoaded", function() {
   const closeLinkedData = document.getElementById("closeLinkedData");
 
   document.getElementById('standardsFileLoadButton').addEventListener('change', function(e) {
-    console.log("File change event triggered"); // Debugging line
-    const file = e.target.files[0];
-    if (!file) return;
-  
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const contents = e.target.result;
-      console.log("File Contents:", contents); // Debugging line
-      const lines = contents.split('\n').filter(Boolean);
-      populateStandardsDropdown(lines);
-    };
-    reader.readAsText(file);
-  
-  });
+    console.log("File change event triggered");
+    const files = e.target.files;
+    if (!files.length) return;
+
+    let standards = [];
+    
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const contents = e.target.result;
+            console.log("File Contents:", contents);
+            const firstLine = contents.split('\n')[0]; // Get the first line
+            if(firstLine) standards.push(firstLine); // If it's not empty, add it to standards
+            if(file === files[files.length-1]) { // If it's the last file, update the dropdown
+                populateStandardsDropdown(standards);
+            }
+        };
+        reader.readAsText(file);
+    });
+});
+
+
+
 
   function updateTimelineDisplay() {
     const timelineTextAreaElem = document.getElementById("timelineTextArea");

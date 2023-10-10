@@ -1,5 +1,5 @@
 This is the manual version of the Ramsey Systems Exmaple Patient Creator programme. This si the second stable version of the programme - changes in UI, functionalities and JSON fstructure are going to be made in the future.
 
 To Do:
-- add drop down to the data paths
-- populate the drop down with the paths from the relevant standard
+- need to have it so that the drop down automatically has values
+- need to sort the 'dataPath' value to be the chosen drop down value

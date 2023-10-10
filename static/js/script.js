@@ -521,9 +521,6 @@ document.getElementById("linkedDataTableBody").addEventListener("change", functi
 // update pop up table when standard changes
 document.getElementById('standardsDropdown').addEventListener('change', function(event) {
 
-  saveLinkedDataToJSON();
-  updateTimelineDisplay();
-
   const selectedStandard = event.target.value;
   const paths = standardsData[selectedStandard]?.dataPaths || [];
   console.log("Selected Standard:", selectedStandard);
@@ -532,6 +529,9 @@ document.getElementById('standardsDropdown').addEventListener('change', function
   document.querySelectorAll('#linkedDataTableBody select').forEach(selectElement => {
       selectElement.innerHTML = paths.map(path => `<option value="${path}">${path}</option>`).join('');
   });
+
+  saveLinkedDataToJSON();
+  updateTimelineDisplay();
 });
 
 

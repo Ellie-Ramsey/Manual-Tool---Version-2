@@ -283,20 +283,28 @@ document.addEventListener("DOMContentLoaded", function() {
     const files = e.target.files;
     if (!files.length) return;
 
-    let standards = [];
+    let standardsData = {};
     
-    Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const contents = e.target.result;
-            console.log("File Contents:", contents);
-            const firstLine = contents.split('\n')[0]; // Get the first line
-            if(firstLine) standards.push(firstLine); // If it's not empty, add it to standards
-            if(file === files[files.length-1]) { // If it's the last file, update the dropdown
-                populateStandardsDropdown(standards);
-            }
-        };
-        reader.readAsText(file);
+    Array.from(files).forEach((file, fileIndex) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          const contents = e.target.result;
+          console.log("File Contents:", contents);
+
+          const [firstLine, ...dataPaths] = contents.split('\n'); // Destructure the content into the first line and the rest
+          
+          if(firstLine) {
+              standardsData[firstLine] = {
+                  dataPaths: dataPaths.filter(Boolean) // Remove empty strings from data paths
+              };
+          }
+
+          // If it's the last file, update the dropdown
+          if(file === files[files.length-1]) {
+              populateStandardsDropdown(Object.keys(standardsData)); // Just pass the standard names to your function
+          }
+      };
+      reader.readAsText(file);
     });
 });
 

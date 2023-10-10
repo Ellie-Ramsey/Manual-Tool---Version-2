@@ -356,12 +356,6 @@ document.addEventListener("DOMContentLoaded", function() {
       timelineTextAreaElem.value = JSON.stringify(timeline_data, null, 2);
     }
   }
-
-  //change drop down; updates the JSON and text area - we testing
-  // document.getElementById("standardsDropdown").addEventListener('change', function() {
-  //   saveLinkedDataToJSON();
-  //   updateTimelineDisplay();
-  // });
   
 // delete timeline table row
   document.getElementById("timelineTableBody").addEventListener("click", function(event) {
@@ -477,7 +471,7 @@ function saveLinkedDataToJSON() {
   rows.forEach(row => {
     const cells = row.querySelectorAll("td");
     obj.linkedData.push({
-      dataPath: cells[0].textContent,
+      dataPath: cells[0].querySelector('select').value,
       exampleData: cells[1].textContent
     });
   });

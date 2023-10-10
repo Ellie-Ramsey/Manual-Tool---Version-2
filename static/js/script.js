@@ -6,10 +6,8 @@ let timelineSave = 1;
 let currentRowId = null;
 let timelineNextId = 1;
 
-const standardDataPaths = {
-  standard1: ['path1', 'path2', 'path3'],
-  standard2: ['pathA', 'pathB', 'pathC'],
-};
+let standardDataPaths = {};
+let standardsData = {};
 
   
 
@@ -295,8 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addLinkedDataRow = function() {
     console.log("Adding blank linked data row")
     let options = "";
-    
-    const defaultPaths = standardDataPaths['defaultStandard'] || [];  
+    const defaultPaths = standardDataPaths['defaultStandard']?.dataPaths || [];  
     defaultPaths.forEach(path => {
       options += `<option value="${path}">${path}</option>`;
     });
@@ -316,6 +313,10 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
   
     document.getElementById("linkedDataTableBody").innerHTML += newRow;
+    const tbody = document.getElementById("linkedDataTableBody");
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = newRow;
+    tbody.appendChild(tempDiv.firstChild);
   }
   
   // standards file import
@@ -323,8 +324,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("File change event triggered");
     const files = e.target.files;
     if (!files.length) return;
-
-    let standardsData = {};
     
     Array.from(files).forEach((file, fileIndex) => {
       const reader = new FileReader();
@@ -343,6 +342,7 @@ document.addEventListener("DOMContentLoaded", function() {
           // If it's the last file, update the dropdown
           if(file === files[files.length-1]) {
               populateStandardsDropdown(Object.keys(standardsData)); // Just pass the standard names to your function
+              console.log("Standards Data:", standardsData);
           }
       };
       reader.readAsText(file);
@@ -357,11 +357,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  //change drop down; updates the JSON and text area
-  document.getElementById("standardsDropdown").addEventListener('change', function() {
-    saveLinkedDataToJSON();
-    updateTimelineDisplay();
-  });
+  //change drop down; updates the JSON and text area - we testing
+  // document.getElementById("standardsDropdown").addEventListener('change', function() {
+  //   saveLinkedDataToJSON();
+  //   updateTimelineDisplay();
+  // });
   
 // delete timeline table row
   document.getElementById("timelineTableBody").addEventListener("click", function(event) {
@@ -421,9 +421,9 @@ document.addEventListener("DOMContentLoaded", function() {
     if (obj && obj.linkedData) {
       obj.linkedData.forEach((dataItem, index) => {
         let options = "";
-        const paths = standardDataPaths[obj.standard] || [];
+        const paths = standardsData[obj.standard]?.dataPaths || [];
         paths.forEach(path => {
-          options += `<option value="${path}"${dataItem.dataPath === path ? ' selected' : ''}>${path}</option>`;
+            options += `<option value="${path}"${dataItem.dataPath === path ? ' selected' : ''}>${path}</option>`;
         });
   
         tableContent += `
@@ -516,14 +516,24 @@ document.getElementById("linkedDataTableBody").addEventListener("change", functi
   }
 }, true);
 
+
+// BUG - THIS BOTTOM CODE IS BROKEN
 // update pop up table when standard changes
-document.getElementById('yourStandardDropdownId').addEventListener('change', function(event) {
+document.getElementById('standardsDropdown').addEventListener('change', function(event) {
+
+  saveLinkedDataToJSON();
+  updateTimelineDisplay();
+
   const selectedStandard = event.target.value;
-  const paths = standardDataPaths[selectedStandard] || [];
+  const paths = standardsData[selectedStandard]?.dataPaths || [];
+  console.log("Selected Standard:", selectedStandard);
+  console.log("PAHHHH aths:", paths);
+
   document.querySelectorAll('#linkedDataTableBody select').forEach(selectElement => {
-    selectElement.innerHTML = paths.map(path => `<option value="${path}">${path}</option>`).join('');
+      selectElement.innerHTML = paths.map(path => `<option value="${path}">${path}</option>`).join('');
   });
 });
+
 
 });
 

@@ -48,6 +48,17 @@ function updateStoryDisplay() {
   document.getElementById('storyTextArea').textContent = JSON.stringify(story_data, null, 2);
 }
 
+//export individual JSON data
+function exportStoryJSON() {
+  const storyJSON = JSON.stringify(story_data, null, 2);
+  const blob = new Blob([storyJSON], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'story.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
 //story story_data variable update
 document.getElementById("storyTableBody").addEventListener('input', function (e) {
   if (e.target && e.target.nodeName === "TD") {
@@ -89,16 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-//export individual JSON data
-function exportStoryJSON() {
-  const storyJSON = JSON.stringify(story_data, null, 2);
-  const blob = new Blob([storyJSON], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'story.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
+
 
 
 
@@ -107,7 +109,6 @@ function exportStoryJSON() {
 function updateTimelineDisplay() {
   document.getElementById('timelineTextArea').textContent = JSON.stringify(timeline_data, null, 2);
 }
-
 
 //export timeline code
 function downloadJSON(data, filename) {
@@ -133,8 +134,6 @@ function exportTimelineJSON() {
     downloadJSON(linkedDataFiles[filename], filename);
   }
 }
-
-
 
 //timeline import code
 document.addEventListener("DOMContentLoaded", function() {
@@ -256,9 +255,7 @@ function renderTimelineTable() {
   document.getElementById("timelineTableBody").innerHTML = tableContent;
 }
 
-
-
-
+//standards dropdown populate
 function populateStandardsDropdown(standards) {
   console.log("Populating Standards: ", standards);
   const dropdown = document.getElementById('standardsDropdown');
@@ -271,6 +268,7 @@ function populateStandardsDropdown(standards) {
   });
 }
 
+//transform main timeline for export
 function transformMainTimeline(original) {
   let result = [];
 
@@ -288,6 +286,7 @@ function transformMainTimeline(original) {
   return result;
 }
 
+//generate linked data files
 function generateLinkedDataFiles(original) {
   let files = {};
 

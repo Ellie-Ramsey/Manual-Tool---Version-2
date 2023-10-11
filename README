@@ -2,4 +2,14 @@ This is the manual version of the Ramsey Systems Exmaple Patient Creator program
 
 To Do:
 - need to have it so that the drop down automatically has values
-- need to sort the 'dataPath' value to be the chosen drop down value
+- put JSON button at the bottom
+
+
+Potential Future Things:
+- import bug with drop down, im not sure if it's real but yeah somehting to come back to
+- weird bug with the files having to be a certain way around (might not be relevant though)
+
+
+- move a row around
+- insert below
+- make import export one file

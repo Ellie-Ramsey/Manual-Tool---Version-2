@@ -1,5 +1,5 @@
 //VARIABLE PREDEFINED
-let story_data = { "Summary": "", "Rationale": "", "Story": ""};
+let story_data = { "summary": "", "rationale": "", "story": ""};
 let storySave = 1;
 let timeline_data = {};
 let timelineSave = 1;
@@ -41,11 +41,75 @@ document.getElementById('saveAllJSONButton').addEventListener('click', exportAll
 
 
 
+document.getElementById('importPatientInfo').addEventListener('change', handleFileImport);
+
+function handleFileImport(event) {
+  if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+          const importedData = JSON.parse(e.target.result);
+          story_data.summary = importedData.summary;
+          story_data.rationale = importedData.rationale;
+          story_data.story = importedData.story;
+          
+          // Update predefined keys in story_data
+          for (let key in story_data) {
+            if (importedData[key]) {
+                story_data[key] = importedData[key];
+            }
+        }
+          
+          console.log("Story Data Updated:", story_data);
+          updateStoryDisplay();
+          updateStoryTable();
+
+
+          console.log("Story Text Area should have updated");
+
+          // Populate timeline_data
+          timeline_data = {};
+          importedData.time_line.forEach((item, index) => {
+            timeline_data[index] = item;
+          });
+
+          console.log("Timeline Data Imported:", timeline_data);
+          
+          renderTimelineTable();
+          updateTimelineDisplay(); // This function should refresh your display based on the new timeline_data
+      };
+
+      reader.onerror = function(err) {
+          console.error("Error reading file:", err);
+      };
+
+      reader.readAsText(file);
+  }
+}
+
+
+
+
+
 
 ///////////////////////////STORY//////////////////////////
 //story text area update
+
 function updateStoryDisplay() {
   document.getElementById('storyTextArea').textContent = JSON.stringify(story_data, null, 2);
+}
+
+function updateStoryTable() {
+  document.querySelectorAll("[data-key]").forEach(function(row) {
+      const key = row.getAttribute('data-key');
+      const tdElement = row.querySelector('td');
+      if (!tdElement) {
+          console.warn(`Skipped updating [data-key="${key}"] due to missing <td> element.`);
+          return;  // skip this iteration if <td> is not found
+      }
+      tdElement.textContent = story_data[key] || "";
+  });
 }
 
 //export individual JSON data
@@ -61,6 +125,7 @@ function exportStoryJSON() {
 
 //story story_data variable update
 document.getElementById("storyTableBody").addEventListener('input', function (e) {
+  console.log("update story data")
   if (e.target && e.target.nodeName === "TD") {
       const row = e.target.closest('tr');
       const key = row.getAttribute('data-key');
@@ -68,43 +133,6 @@ document.getElementById("storyTableBody").addEventListener('input', function (e)
       updateStoryDisplay();
   }
 });
-
-
-
-
-
-// CURRENT FOCUS
-//story import code
-document.addEventListener("DOMContentLoaded", function() {
-
-  document.getElementById('importStory').addEventListener('change', handleFileImport);
-
-  function handleFileImport(event) {
-      if (event.target.files.length > 0) {
-          const file = event.target.files[0];
-          const reader = new FileReader();
-
-          reader.onload = function(e) {
-              story_data = JSON.parse(e.target.result);
-              console.log("Data Imported:", story_data);
-              updateStoryDisplay();
-
-              // Updated data import code
-              document.querySelectorAll("[data-key]").forEach(function(row) {
-                  const key = row.getAttribute('data-key');
-                  row.querySelector('td').textContent = story_data[key];
-              });
-          };
-
-          reader.onerror = function(err) {
-              console.error("Error reading file:", err);
-          };
-
-          reader.readAsText(file);
-      }
-  }
-});
-
 
 
 
@@ -140,107 +168,6 @@ function exportTimelineJSON() {
   }
 }
 
-
-
-// CURRENT FOCUS
-//timeline import code
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById('importFiles').addEventListener('change', handleFilesUpload);
-  document.getElementById('processFilesBtn').addEventListener('click', processUploadedFiles);
-
-  let uploadedFiles = [];
-
-  function handleFilesUpload(event) {
-    uploadedFiles = event.target.files;
-    console.log(`${uploadedFiles.length} files uploaded. Press 'Process Files' to process.`);
-  }
-
-  function processUploadedFiles() {
-    let linkedDataFiles = [];
-
-    for (let file of uploadedFiles) {
-      if (file.name === 'timeline.json') {
-        parseTimelineFile(file, data => timeline_data = data);
-      } else if (file.name.startsWith('linkedData_')) {
-        linkedDataFiles.push(file);
-      }
-    }
-
-    const timelineDataParsedCheck = setInterval(() => {
-      if (timeline_data) {
-        clearInterval(timelineDataParsedCheck);
-        processLinkedDataFiles(linkedDataFiles, timeline_data);
-      }
-    }, 100);
-  }
-
-  function parseTimelineFile(file, callback) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const rawData = JSON.parse(e.target.result);
-      let structuredData = structureTimelineData(rawData);
-      callback(structuredData);
-    };
-    reader.onerror = err => console.error("Error reading file:", err);
-    reader.readAsText(file);
-  }
-
-  function processLinkedDataFiles(files, timeline_data) {
-    const promises = files.map(file => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        try {
-          const linkedData = JSON.parse(e.target.result);
-          integrateLinkedDataToTimeline(linkedData, timeline_data, file.name);
-          resolve();
-        } catch (err) {
-          reject(new Error(`Error in parsing/processing linkedData from file ${file.name}: ${err.message}`));
-        }
-      };
-      reader.onerror = err => reject(new Error(`Error reading file ${file.name}: ${err.message}`));
-      reader.readAsText(file);
-    }));
-
-    Promise.all(promises)
-      .then(() => {
-        console.log("All linked data files processed.");
-        console.log("Final timeline data:", timeline_data);
-        renderTimelineTable();
-        updateTimelineDisplay(); // Ensure this function is defined in your code
-      })
-      .catch(err => console.error(err));
-  }
-  
-  function structureTimelineData(rawData) {
-    const structuredData = {};
-    rawData.forEach((item, index) => {
-        currentRowId++;  // Incrementing currentRowId for every item
-        timelineNextId = currentRowId + 1;  // Setting timelineNextId to be one more than currentRowId
-
-        structuredData[currentRowId] = {
-            id: currentRowId,
-            time: item.time,
-            event: item.event,
-            standard: null,
-            linkedData: []
-        };
-    });
-    return structuredData;
-}
-
-
-  function integrateLinkedDataToTimeline(linkedData, timeline_data, fileName) {
-    const linkedDataId = parseInt(fileName.split('_')[1], 10);
-
-    const standard = linkedData[0]?.standard || null;
-    if (timeline_data[linkedDataId]) {
-      timeline_data[linkedDataId].standard = standard;
-      timeline_data[linkedDataId].linkedData = linkedData.slice(1);
-    } else {
-      console.error(`Timeline data for linked data ID ${linkedDataId} not found.`);
-    }
-  }
-});
 
 //timeline variable to table render code (used for import)
 function renderTimelineTable() {
@@ -489,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const newRow = `
       <tr id="row-${timelineNextId}">
-        <td data-key="time" contenteditable="true"></td>
+        <td data-key="time" contenteditable="true"x></td>
         <td data-key="event" contenteditable="true"></td>
         <td>
           <button id="dataItemBtn-${timelineNextId}" onclick="toggleDataItem(${timelineNextId})">Add</button>

@@ -69,6 +69,11 @@ document.getElementById("storyTableBody").addEventListener('input', function (e)
   }
 });
 
+
+
+
+
+// CURRENT FOCUS
 //story import code
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -135,6 +140,9 @@ function exportTimelineJSON() {
   }
 }
 
+
+
+// CURRENT FOCUS
 //timeline import code
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('importFiles').addEventListener('change', handleFilesUpload);
@@ -254,6 +262,9 @@ function renderTimelineTable() {
   }
   document.getElementById("timelineTableBody").innerHTML = tableContent;
 }
+
+
+
 
 //standards dropdown populate
 function populateStandardsDropdown(standards) {

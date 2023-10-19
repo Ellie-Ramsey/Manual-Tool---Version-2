@@ -45,6 +45,10 @@ th, td {
     white-space: normal !important;
 }
 
+.text-left {
+    text-align: left;
+}
+
 
 /* MODAL CSS */
     .modal {

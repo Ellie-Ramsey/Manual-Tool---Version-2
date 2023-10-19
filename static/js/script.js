@@ -32,9 +32,8 @@ document.getElementById('toggleTimelineText').addEventListener('change', functio
 
 
 
-// Attach event listener to the "Save All JSON" button
+// JSON Export code
 document.getElementById('saveAllJSONButton').addEventListener('click', exportAllJSON);
-
 
 function exportAllJSON() {
   // Combine the two data structures
@@ -58,19 +57,6 @@ function exportAllJSON() {
   a.click();
   document.body.removeChild(a);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -189,8 +175,8 @@ function renderTimelineTable() {
     const rowData = timeline_data[id];
     tableContent += `
       <tr id="row-${id}">
-        <td data-key="time" contenteditable="true">${rowData.time}</td>
-        <td data-key="event" contenteditable="true">${rowData.event}</td>
+        <td data-key="time" contenteditable="true" class="text-left">${rowData.time}</td>
+        <td data-key="event" contenteditable="true" class="text-left">${rowData.event}</td>
         <td>
           <button id="dataItemBtn-${id}" onclick="toggleDataItem(${id})">${rowData.linkedData.length > 0 ? 'Edit' : 'Add'}</button>
         </td>
@@ -313,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 ${options}
               </select>
             </td>
-            <td contenteditable="true">${dataItem.exampleData || ''}</td>
+            <td contenteditable="true" class="text-left">${dataItem.exampleData || ''}</td>
             <td>
               <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
             </td>
@@ -340,7 +326,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ${options}
           </select>
         </td>
-        <td contenteditable="true"></td>
+        <td contenteditable="true" class="text-left"></td>
         <td>
           <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
         </td>
@@ -428,8 +414,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const newRow = `
       <tr id="row-${timelineNextId}">
-        <td data-key="time" contenteditable="true"x></td>
-        <td data-key="event" contenteditable="true"></td>
+        <td data-key="time" contenteditable="true" class="text-left"></td>
+        <td data-key="event" contenteditable="true" class="text-left"></td>
         <td>
           <button id="dataItemBtn-${timelineNextId}" onclick="toggleDataItem(${timelineNextId})">Add</button>
         </td>

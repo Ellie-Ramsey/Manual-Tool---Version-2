@@ -13,8 +13,6 @@ let isStoryTextAreaVisible = false;
 let isTimelineTextAreaVisible = false;
   
 //////////////////////////RELEVANT TO BOTH//////////////////////////
-
-
 document.getElementById('toggleStoryText').addEventListener('click', function() {
     const textArea = document.getElementById('storyTextArea');
     if (isStoryTextAreaVisible) {

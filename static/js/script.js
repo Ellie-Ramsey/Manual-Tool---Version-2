@@ -9,25 +9,35 @@ let timelineNextId = 1;
 let standardDataPaths = {};
 let standardsData = {};
 
+let isStoryTextAreaVisible = false;
+let isTimelineTextAreaVisible = false;
   
 //////////////////////////RELEVANT TO BOTH//////////////////////////
-document.getElementById('toggleStoryText').addEventListener('change', function() {
-  var textArea = document.getElementById('storyTextArea');
-  if(this.checked) {
-      textArea.style.display = 'block'; // show text area
+
+
+document.getElementById('toggleStoryText').addEventListener('click', function() {
+    const textArea = document.getElementById('storyTextArea');
+    if (isStoryTextAreaVisible) {
+        textArea.style.display = 'none';
+        isStoryTextAreaVisible = false;
+    } else {
+        textArea.style.display = 'block';
+        isStoryTextAreaVisible = true;
+    }
+});
+
+
+document.getElementById('toggleTimelineText').addEventListener('click', function() {
+  const textArea = document.getElementById('timelineTextArea');
+  if (isTimelineTextAreaVisible) {
+      textArea.style.display = 'none';
+      isTimelineTextAreaVisible = false;
   } else {
-      textArea.style.display = 'none'; // hide text area
+      textArea.style.display = 'block';
+      isTimelineTextAreaVisible = true;
   }
 });
 
-document.getElementById('toggleTimelineText').addEventListener('change', function() {
-  var textArea = document.getElementById('timelineTextArea');
-  if(this.checked) {
-      textArea.style.display = 'block'; // show text area
-  } else {
-      textArea.style.display = 'none'; // hide text area
-  }
-});
 
 
 

@@ -51,12 +51,14 @@
   <br>    
     <div class="container content">
 
-      <input type="checkbox" id="toggleStoryText" style="margin-right: 10px;">
+      <!-- <input type="checkbox" id="toggleStoryText" style="margin-right: 10px;"> -->
+
+
       <h3 class="inline-header">Story</h3>
       <br>
       
 
-      <textarea class="form-control" id="storyTextArea" style="height: 200px; background-color: rgba(241, 241, 241, 0.624); display: none;"></textarea>
+      <textarea class="form-control" id="storyTextArea" style="min-height: 400px; background-color: rgba(241, 241, 241, 0.624); display: none;"></textarea>
       <br>
       <table class="table table-bordered">
         <tbody id="storyTableBody">
@@ -76,18 +78,18 @@
     </table>
     
 
+    <button id="toggleStoryText" class="btn hidden">JSON</button>
 
   </div>
   <br>
   
   <div class="container content">
 
-    <input type="checkbox" id="toggleTimelineText" style="margin-right: 10px;">
     <h3 class="inline-header">Timeline</h3>
     <button id="addBlankRowBtn" class="btn inline-header" style="margin-bottom: 12px; float: right; margin-right: 30px;">Add Blank Row</button>
     <br>
 
-    <textarea class="form-control" id="timelineTextArea" style="height: 150px; background-color: rgba(241, 241, 241, 0.624);  display: none;"></textarea>
+    <textarea class="form-control" id="timelineTextArea" style="min-height: 400px; background-color: rgba(241, 241, 241, 0.624);  display: none;"></textarea>
     <br>
     <div class="container">
         <table class="table wrap-text-table table-striped table-bordered">
@@ -131,6 +133,9 @@
             
           </div>
         </div>
+
+      <button id="toggleTimelineText" class="btn hidden">JSON</button>
+
 
 </div>
 

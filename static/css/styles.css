@@ -49,6 +49,17 @@ th, td {
     text-align: left;
 }
 
+.hidden {
+    margin-bottom: -16px;
+    margin-left: -16px;
+    background-color: rgba(241, 241, 241, 0.624);
+    color:rgba(25, 37, 55, 0.566)
+}
+
+.hidden:hover {
+    background-color: rgba(199, 199, 199, 0.624);
+}
+
 
 /* MODAL CSS */
     .modal {

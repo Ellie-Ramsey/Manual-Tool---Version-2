@@ -12,6 +12,7 @@ let isStoryTextAreaVisible = false;
 let isTimelineTextAreaVisible = false;
   
 //////////////////////////RELEVANT TO BOTH//////////////////////////
+// text area code
 document.getElementById('toggleStoryText').addEventListener('click', function() {
     const textArea = document.getElementById('storyTextArea');
     if (isStoryTextAreaVisible) {
@@ -22,8 +23,6 @@ document.getElementById('toggleStoryText').addEventListener('click', function() 
         isStoryTextAreaVisible = true;
     }
 });
-
-
 document.getElementById('toggleTimelineText').addEventListener('click', function() {
   const textArea = document.getElementById('timelineTextArea');
   if (isTimelineTextAreaVisible) {
@@ -34,9 +33,6 @@ document.getElementById('toggleTimelineText').addEventListener('click', function
       isTimelineTextAreaVisible = true;
   }
 });
-
-
-
 
 
 // JSON Export code
@@ -66,8 +62,7 @@ function exportAllJSON() {
 }
 
 
-
-//patient information import code
+//JSON import code
 document.getElementById('importPatientInfo').addEventListener('change', handleFileImport);
 
 function handleFileImport(event) {
@@ -117,9 +112,6 @@ function handleFileImport(event) {
 
 
 
-
-
-
 ///////////////////////////STORY//////////////////////////
 //story text area update
 
@@ -138,7 +130,6 @@ function updateStoryTable() {
       tdElement.textContent = story_data[key] || "";
   });
 }
-
 
 
 //story story_data variable update
@@ -173,8 +164,6 @@ function downloadJSON(data, filename) {
 }
 
 
-
-
 //timeline variable to table render code (used for import)
 function renderTimelineTable() {
   let tableContent = "";
@@ -195,8 +184,6 @@ function renderTimelineTable() {
   }
   document.getElementById("timelineTableBody").innerHTML = tableContent;
 }
-
-
 
 
 //standards dropdown populate

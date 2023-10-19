@@ -6,7 +6,6 @@ let timelineSave = 1;
 let currentRowId = null;
 let timelineNextId = 1;
 
-let standardDataPaths = {};
 let standardsData = {};
 
 let isStoryTextAreaVisible = false;
@@ -321,11 +320,21 @@ document.addEventListener("DOMContentLoaded", function() {
   //add blank row to pop up table
   window.addLinkedDataRow = function() {
     console.log("Adding blank linked data row")
+
+    const selectedStandard = document.getElementById('standardsDropdown').value;
+    console.log("standardDataPaths:", standardsData);
+    console.log("selectedStandard:", selectedStandard);
+
+    //WOMAN WHAT IS THIS M8
+    const defaultPaths = standardsData[selectedStandard]?.dataPaths || [];
+
+    console.log("defaultPaths" + defaultPaths)
     let options = "";
-    const defaultPaths = standardDataPaths['defaultStandard']?.dataPaths || [];  
     defaultPaths.forEach(path => {
       options += `<option value="${path}">${path}</option>`;
     });
+
+    console.log("options here" + options)
   
     const newRow = `
       <tr>
@@ -447,26 +456,28 @@ document.addEventListener("DOMContentLoaded", function() {
     Array.from(files).forEach((file, fileIndex) => {
       const reader = new FileReader();
       reader.onload = function(e) {
-          const contents = e.target.result;
+          const contents = JSON.parse(e.target.result);
           console.log("File Contents:", contents);
 
-          const [firstLine, ...dataPaths] = contents.split('\n'); // Destructure the content into the first line and the rest
+          // Using file name as standard name (removing .json extension)
+          const standardName = file.name.replace('.json', '');
           
-          if(firstLine) {
-              standardsData[firstLine] = {
-                  dataPaths: dataPaths.filter(Boolean) // Remove empty strings from data paths
+          if(standardName) {
+              standardsData[standardName] = {
+                  dataPaths: contents.filter(Boolean) // Remove any falsy values from the data paths (like empty strings)
               };
           }
 
           // If it's the last file, update the dropdown
-          if(file === files[files.length-1]) {
-              populateStandardsDropdown(Object.keys(standardsData)); // Just pass the standard names to your function
+          if(fileIndex === files.length-1) {
+              populateStandardsDropdown(Object.keys(standardsData));
               console.log("Standards Data:", standardsData);
           }
       };
-      reader.readAsText(file);
+      reader.readAsText(file); // We still read as text but then parse the result as JSON
     });
 });
+
 
 // delete timeline table row
   document.getElementById("timelineTableBody").addEventListener("click", function(event) {

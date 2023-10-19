@@ -426,7 +426,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Adding blank timeline row")
 
     timeline_data[timelineNextId] = {
-      id: timelineNextId,
       time: "",
       event: "",
       standard: null,

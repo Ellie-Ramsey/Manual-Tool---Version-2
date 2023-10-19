@@ -30,41 +30,35 @@ document.getElementById('toggleTimelineText').addEventListener('change', functio
 });
 
 
-// New function to export both JSON files
-function exportAllJSON() {
-  exportStoryJSON();
-  exportTimelineJSON();
-}
+
 
 // Attach event listener to the "Save All JSON" button
 document.getElementById('saveAllJSONButton').addEventListener('click', exportAllJSON);
 
 
-//export individual JSON data
-function exportStoryJSON() {
-  const storyJSON = JSON.stringify(story_data, null, 2);
-  const blob = new Blob([storyJSON], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'story.json';
+function exportAllJSON() {
+  // Combine the two data structures
+  let combinedData = {
+    ...story_data,
+    "time_line": Object.values(timeline_data) // Convert timeline_data from an object to an array
+  };
+
+  // Convert the combined data to a JSON string with formatting
+  let jsonString = JSON.stringify(combinedData, null, 2);
+
+  // Create a downloadable blob from the JSON string
+  let blob = new Blob([jsonString], { type: "application/json" });
+  let url = window.URL.createObjectURL(blob);
+
+  // Create a download link and click it
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "patientOutput.json";
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
 }
 
-
-function exportTimelineJSON() {
-  // Transform main timeline
-  const newTimeline = transformMainTimeline(timeline_data);
-
-  // Download main timeline
-  downloadJSON(newTimeline, 'timeline.json');
-
-  // Generate and download linkedData files
-  const linkedDataFiles = generateLinkedDataFiles(timeline_data);
-  for (let filename in linkedDataFiles) {
-    downloadJSON(linkedDataFiles[filename], filename);
-  }
-}
 
 
 

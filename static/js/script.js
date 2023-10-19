@@ -40,7 +40,47 @@ function exportAllJSON() {
 document.getElementById('saveAllJSONButton').addEventListener('click', exportAllJSON);
 
 
+//export individual JSON data
+function exportStoryJSON() {
+  const storyJSON = JSON.stringify(story_data, null, 2);
+  const blob = new Blob([storyJSON], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'story.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
 
+
+function exportTimelineJSON() {
+  // Transform main timeline
+  const newTimeline = transformMainTimeline(timeline_data);
+
+  // Download main timeline
+  downloadJSON(newTimeline, 'timeline.json');
+
+  // Generate and download linkedData files
+  const linkedDataFiles = generateLinkedDataFiles(timeline_data);
+  for (let filename in linkedDataFiles) {
+    downloadJSON(linkedDataFiles[filename], filename);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//patient information import code
 document.getElementById('importPatientInfo').addEventListener('change', handleFileImport);
 
 function handleFileImport(event) {
@@ -112,16 +152,7 @@ function updateStoryTable() {
   });
 }
 
-//export individual JSON data
-function exportStoryJSON() {
-  const storyJSON = JSON.stringify(story_data, null, 2);
-  const blob = new Blob([storyJSON], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'story.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
+
 
 //story story_data variable update
 document.getElementById("storyTableBody").addEventListener('input', function (e) {
@@ -154,19 +185,7 @@ function downloadJSON(data, filename) {
   URL.revokeObjectURL(a.href);
 }
 
-function exportTimelineJSON() {
-  // Transform main timeline
-  const newTimeline = transformMainTimeline(timeline_data);
 
-  // Download main timeline
-  downloadJSON(newTimeline, 'timeline.json');
-
-  // Generate and download linkedData files
-  const linkedDataFiles = generateLinkedDataFiles(timeline_data);
-  for (let filename in linkedDataFiles) {
-    downloadJSON(linkedDataFiles[filename], filename);
-  }
-}
 
 
 //timeline variable to table render code (used for import)

@@ -7,7 +7,7 @@
     <meta name="description" content="Demonstration of ChatGPT API in a Python Flask Application for Ramsey Systems.">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     
@@ -39,19 +39,6 @@
       <label class="input-group-text" for="standardsFileLoadButton" style="width: 160px;">Standards Upload</label>
       <input type="file" class="form-control" id="standardsFileLoadButton" multiple>
     </div>
-
-
-    <!-- <div class="input-group mb-3">
-      <label class="input-group-text" for="importStory" style="width: 160px;">Story JSON</label>
-      <input type="file" class="form-control" id="importStory" accept=".json">
-    </div>
-
-    
-    <div class="input-group">
-      <label class="input-group-text" for="importFiles" style="width: 160px;">Timeline JSONs</label>
-      <input type="file" class="form-control" id="importFiles" multiple aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-      <button class="btn btn-outline-secondary" type="button" id="processFilesBtn">Upload</button>
-    </div> -->
 
     <div class="input-group mb-3">
       <label class="input-group-text" for="importPatientInfo" style="width: 160px;">Upload Patient File</label>

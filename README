@@ -10,19 +10,35 @@ Potential Future Things:
 - make import export one file
 
 
+- do i need to add the standard URL and standard name
+- do we need sheet
+- are squares all of the editable stuff
+
+- look for how many square brackets there are, add text boxes for each one
+
+
 
 
 
 To Do:
 
-JSON CHANGE:
-- need to change the import structure
-  - ask about the inclusion of the 'standard' + URL part (if yes will need to update all of the story functionality)
-  
+JSON CHANGES:
 - need to change the export structure
 
-
-
-
-- need to have it so that the drop down automatically has values
+General:
+- make text left align
+- make timeline table row sizes different
 - put JSON button at the bottom
+
+
+STANDARDS:
+- change to a combobox
+   (need to have a qay to search the data paths drop down)
+- - need to have it so that the drop down automatically has values
+
+
+
+
+
+
+

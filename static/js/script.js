@@ -234,6 +234,36 @@ function generateLinkedDataFiles(original) {
 }
 
 
+
+const dropdown = document.getElementById('dropdown');
+const popupWindow = document.getElementById('popupWindow');
+const closePopupBtn = document.getElementById('closePopupBtn');
+const popupContentText = document.getElementById('popupContentText');
+
+dropdown.addEventListener('change', function() {
+    const regex = /\[.*?\]/;
+    if (regex.test(this.value)) {
+        popupContentText.textContent = this.value;
+        popupWindow.style.display = "block";
+    }
+});
+
+closePopupBtn.addEventListener('click', function() {
+    popupWindow.style.display = "none";
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target === popupWindow) {
+        popupWindow.style.display = "none";
+    }
+});
+
+
+
+
+
+
+
 //timeline main DOM
 document.addEventListener("DOMContentLoaded", function() {
   const linkedDataModal = document.getElementById("editModal");
@@ -256,14 +286,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     obj.standard = selectedStandard;  // Setting the standard
-  }
-
-  // update timeline text area
-  function updateTimelineDisplay() {
-    const timelineTextAreaElem = document.getElementById("timelineTextArea");
-    if (timelineTextAreaElem) {
-      timelineTextAreaElem.value = JSON.stringify(timeline_data, null, 2);
-    }
   }
 
   // update timeline text area
@@ -465,7 +487,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
 // delete timeline table row
   document.getElementById("timelineTableBody").addEventListener("click", function(event) {
     if (event.target && event.target.matches(".delete-row")) {
@@ -513,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const selectedStandard = event.target.value;
     const paths = standardsData[selectedStandard]?.dataPaths || [];
     console.log("Selected Standard:", selectedStandard);
-    console.log("PAHHHH aths:", paths);
+    console.log("Paths:", paths);
 
     document.querySelectorAll('#linkedDataTableBody select').forEach(selectElement => {
         selectElement.innerHTML = paths.map(path => `<option value="${path}">${path}</option>`).join('');

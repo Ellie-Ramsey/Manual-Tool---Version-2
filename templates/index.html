@@ -101,8 +101,31 @@
             <tbody id="timelineTableBody">
             </tbody>
         </table>
+
+        <select id="dropdown">
+          <option value="none">--Select an option--</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="Square Brackets[]">Square Brackets[]</option>
+          <option value="Also square brackets []">Also square brackets []</option>
+      </select>
+
     </div>
   
+
+
+
+
+    <div class="popupWindow" id="popupWindow">
+      <div class="popupContent">
+          <span id="closePopupBtn" style="cursor:pointer;float:right;">&times;</span>
+          <h2 id="popupContentText"></h2>
+      </div>
+  </div>
+
+
+
+
     <div id="editModal" class="modal">
       <br>
         <div class="modal-content">
@@ -125,11 +148,17 @@
                 <tbody id="linkedDataTableBody">
                 </tbody>
             </table>
+
+            
             
             <button id="deleteDataItem" class="btn btn-outline-dark" onclick="resetLinkedData()" style="width: 80px;">Delete</button>
             
           </div>
         </div>
+
+      
+
+
 
       <button id="toggleTimelineText" class="btn hidden">JSON</button>
 

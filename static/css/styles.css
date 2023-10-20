@@ -88,7 +88,7 @@ th, td {
   .popupWindow {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 10; /* Sit on top */
+    z-index: 20; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -100,7 +100,7 @@ th, td {
 .popupContent {
     position: relative;
     margin: 10% auto;
-    margin-top: 5%;
+    margin-top: 10%;
     padding: 20px;
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);

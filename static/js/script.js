@@ -235,16 +235,23 @@ function generateLinkedDataFiles(original) {
 
 
 
-const dropdown = document.getElementById('dropdown');
 const popupWindow = document.getElementById('popupWindow');
 const closePopupBtn = document.getElementById('closePopupBtn');
 const popupContentText = document.getElementById('popupContentText');
 
-dropdown.addEventListener('change', function() {
-    const regex = /\[.*?\]/;
-    if (regex.test(this.value)) {
-        popupContentText.textContent = this.value;
-        popupWindow.style.display = "block";
+// Event delegation
+document.getElementById('linkedDataTableBody').addEventListener('change', function(event) {
+    if (event.target.tagName === "SELECT") {
+        const selectedValue = event.target.value;
+        
+        // Check if the selected value contains at least one set of '[]'
+        const regex = /\[.*?\]/;
+        if (regex.test(selectedValue)) {
+            // Update the popup's content to the selected value
+            popupContentText.textContent = selectedValue;
+            // Display the popup
+            popupWindow.style.display = "block";
+        }
     }
 });
 
@@ -252,11 +259,13 @@ closePopupBtn.addEventListener('click', function() {
     popupWindow.style.display = "none";
 });
 
+// Close the popup when clicking outside of it
 window.addEventListener('click', function(event) {
     if (event.target === popupWindow) {
         popupWindow.style.display = "none";
     }
 });
+
 
 
 

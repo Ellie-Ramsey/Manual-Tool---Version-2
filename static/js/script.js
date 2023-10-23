@@ -240,6 +240,9 @@ const popupWindow = document.getElementById('popupWindow');
 const closePopupBtn = document.getElementById('closePopupBtn');
 const popupContentText = document.getElementById('popupContentText');
 
+let currentSelect; // This is to keep a reference to the select dropdown that triggered the popup
+let editedDataPath; // This will store the edited data path from the popup
+
 // Event delegation
 document.getElementById('linkedDataTableBody').addEventListener('change', function(event) {
   if (event.target.tagName === "SELECT") {
@@ -252,24 +255,38 @@ document.getElementById('linkedDataTableBody').addEventListener('change', functi
           const modifiedValue = selectedValue.split('[]').join('[<input type="text" style="margin: 0 5px; width: 30px;">]');
           
           // Update the popup's content to the modified value
-          popupContentText.innerHTML = modifiedValue; // Using innerHTML as we want to parse the HTML input tags
+          popupContentText.innerHTML = modifiedValue;
+
+          currentSelect = event.target;
+
           // Display the popup
           popupWindow.style.display = "block";
       }
   }
 });
 
-
 closePopupBtn.addEventListener('click', function() {
+    if (currentSelect) {
+        editedDataPath = currentSelect.value;
+
+        const inputElements = popupContentText.querySelectorAll('input');
+        inputElements.forEach(input => {
+            editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
+        });
+        
+        currentSelect = null; 
+    }
+
+    console.log("1 The edited path: " + editedDataPath)
     popupWindow.style.display = "none";
 });
 
 // Close the popup when clicking outside of it
-window.addEventListener('click', function(event) {
-    if (event.target === popupWindow) {
-        popupWindow.style.display = "none";
-    }
-});
+// window.addEventListener('click', function(event) {
+//     if (event.target === popupWindow) {
+//       
+//     }
+// });
 
 
 
@@ -282,6 +299,7 @@ window.addEventListener('click', function(event) {
 document.addEventListener("DOMContentLoaded", function() {
   const linkedDataModal = document.getElementById("editModal");
   const closeLinkedData = document.getElementById("closeLinkedData");
+  console.log("2 The edited path: " + editedDataPath)
 
   // save linked data to JSON
   function saveLinkedDataToJSON() {
@@ -293,14 +311,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const rows = document.querySelectorAll("#linkedDataTableBody tr");
     rows.forEach(row => {
       const cells = row.querySelectorAll("td");
+      
       obj.linkedData.push({
-        dataPath: cells[0].querySelector('select').value,
+        dataPath: editedDataPath || cells[0].querySelector('select').value,
         exampleData: cells[1].textContent
       });
     });
     
+    console.log("3 The edited path: " + editedDataPath)
     obj.standard = selectedStandard;  // Setting the standard
-  }
+    editedDataPath = null;  // Clear editedDataPath after saving
+}
+
 
   // update timeline text area
   function updateTimelineDisplay() {
@@ -345,8 +367,8 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Adding blank linked data row")
 
     const selectedStandard = document.getElementById('standardsDropdown').value;
-    console.log("standardDataPaths:", standardsData);
-    console.log("selectedStandard:", selectedStandard);
+    // console.log("standardDataPaths:", standardsData);
+    // console.log("selectedStandard:", selectedStandard);
 
     //WOMAN WHAT IS THIS M8
     const defaultPaths = standardsData[selectedStandard]?.dataPaths || [];
@@ -357,7 +379,7 @@ document.addEventListener("DOMContentLoaded", function() {
       options += `<option value="${path}">${path}</option>`;
     });
 
-    console.log("options here" + options)
+    // console.log("options here" + options)
   
     const newRow = `
       <tr>
@@ -437,6 +459,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // close pop up table when clicked outside
   linkedDataModal.addEventListener("click", function(event) {
     if (event.target === linkedDataModal) {
+      saveLinkedDataToJSON();
+      updateTimelineDisplay();
       linkedDataModal.style.display = "none";
     }
   });
@@ -480,7 +504,7 @@ document.addEventListener("DOMContentLoaded", function() {
       const reader = new FileReader();
       reader.onload = function(e) {
           const contents = JSON.parse(e.target.result);
-          console.log("File Contents:", contents);
+          // console.log("File Contents:", contents);
 
           // Using file name as standard name (removing .json extension)
           const standardName = file.name.replace('.json', '');
@@ -494,7 +518,7 @@ document.addEventListener("DOMContentLoaded", function() {
           // If it's the last file, update the dropdown
           if(fileIndex === files.length-1) {
               populateStandardsDropdown(Object.keys(standardsData));
-              console.log("Standards Data:", standardsData);
+              // console.log("Standards Data:", standardsData);
           }
       };
       reader.readAsText(file); // We still read as text but then parse the result as JSON

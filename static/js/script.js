@@ -235,25 +235,30 @@ function generateLinkedDataFiles(original) {
 
 
 
+// code for data path pop up
 const popupWindow = document.getElementById('popupWindow');
 const closePopupBtn = document.getElementById('closePopupBtn');
 const popupContentText = document.getElementById('popupContentText');
 
 // Event delegation
 document.getElementById('linkedDataTableBody').addEventListener('change', function(event) {
-    if (event.target.tagName === "SELECT") {
-        const selectedValue = event.target.value;
-        
-        // Check if the selected value contains at least one set of '[]'
-        const regex = /\[.*?\]/;
-        if (regex.test(selectedValue)) {
-            // Update the popup's content to the selected value
-            popupContentText.textContent = selectedValue;
-            // Display the popup
-            popupWindow.style.display = "block";
-        }
-    }
+  if (event.target.tagName === "SELECT") {
+      const selectedValue = event.target.value;
+      
+      // Check if the selected value contains at least one set of '[]'
+      const regex = /\[.*?\]/;
+      if (regex.test(selectedValue)) {
+          // Replace every "[]" with an input field
+          const modifiedValue = selectedValue.split('[]').join('[<input type="text" style="margin: 0 5px; width: 30px;">]');
+          
+          // Update the popup's content to the modified value
+          popupContentText.innerHTML = modifiedValue; // Using innerHTML as we want to parse the HTML input tags
+          // Display the popup
+          popupWindow.style.display = "block";
+      }
+  }
 });
+
 
 closePopupBtn.addEventListener('click', function() {
     popupWindow.style.display = "none";
@@ -357,7 +362,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const newRow = `
       <tr>
         <td>
-          <select>
+          <select style="max-width: 80%;">
             ${options}
           </select>
         </td>

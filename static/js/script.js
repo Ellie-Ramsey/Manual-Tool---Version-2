@@ -368,64 +368,61 @@ document.addEventListener("DOMContentLoaded", function() {
         let options = "";
         const paths = standardsData[obj.standard]?.dataPaths || [];
         paths.forEach(path => {
-            options += `<option value="${path}">`;
+          options += `<option value="${path}">`;
         });
   
         tableContent += `
-        <tr>
-            <td style="width: 40%;">
-                <input list="dataPaths${index}" value="${dataItem.dataPath}" style="width: 80%;" oninput="updateDisplayedValue(this)">
-                <datalist id="dataPaths${index}">
-                    ${options}
-                </datalist>
-                <div class="displayed-data-path">${dataItem.dataPath}</div> <!-- This is new -->
-            </td>
-            <td contenteditable="true" class="text-left" style="width: 40%;">${dataItem.exampleData || ''}</td>
-            <td style="width: 20%;">
-                <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
-            </td>
-        </tr>
-    `;
+          <tr>
+              <td style="width: 40%;">
+                  <input list="dataPaths${index}" value="${dataItem.dataPath}" style="width: 90%;">
+                  <datalist id="dataPaths${index}">
+                      ${options}
+                  </datalist>
+              </td>
+              <td contenteditable="true" class="text-left" style="width: 40%;">${dataItem.exampleData || ''}</td>
+              <td style="width: 20%;">
+                  <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
+              </td>
+          </tr>
+        `;
       });
     }
     document.getElementById("linkedDataTableBody").innerHTML = tableContent;
   }
+  
 
   // add row to linked data modal
   window.addLinkedDataRow = function() {
-    console.log("Adding blank linked data row")
-
     const selectedStandard = document.getElementById('standardsDropdown').value;
     const defaultPaths = standardsData[selectedStandard]?.dataPaths || [];
-    console.log("defaultPaths" + defaultPaths)
     let options = "";
     defaultPaths.forEach(path => {
       options += `<option value="${path}">`;
     });
-
+  
     const currentRowCount = document.querySelectorAll('#linkedDataTableBody tr').length;
-
+  
     const newRow = `
       <tr>
           <td style="width: 40%;">
-              <input list="dataPaths${currentRowCount}" style="width: 80%;" oninput="updateDisplayedValue(this)">
+              <input list="dataPaths${currentRowCount}" style="width: 90%;">
               <datalist id="dataPaths${currentRowCount}">
                   ${options}
               </datalist>
-              <div class="displayed-data-path"></div> <!-- This is new -->
           </td>
           <td contenteditable="true" class="text-left" style="width: 40%;"></td>
           <td style="width: 20%;">
               <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
           </td>
       </tr>
-  `;
+    `;
     document.getElementById("linkedDataTableBody").innerHTML += newRow;
     const tbody = document.getElementById("linkedDataTableBody");
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = newRow;
     tbody.appendChild(tempDiv.firstChild);
   }
+  
 
   // delete row from timeline json
   window.deleteRow = function(rowId) {

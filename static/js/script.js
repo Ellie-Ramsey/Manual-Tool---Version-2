@@ -290,14 +290,31 @@ closePopupBtn.addEventListener('click', function() {
   popupWindow.style.display = "none";
 });
 
-
-
 // Close the popup when clicking outside of it
-// window.addEventListener('click', function(event) {
-//     if (event.target === popupWindow) {
-//       
-//     }
-// });
+window.addEventListener('click', function(event) {
+    if (event.target === popupWindow) {
+      if (currentInput) {
+        editedDataPath = currentInput.value;
+  
+        const inputElements = popupContentText.querySelectorAll('input');
+        inputElements.forEach(input => {
+            editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
+        });
+  
+        // Set the modified value back to the combobox
+        currentInput.value = editedDataPath;
+  
+        // Update the displayed value after setting the new value to the combobox
+        updateDisplayedValue(currentInput);
+  
+        currentInput = null;  // Clear reference to the input box
+    }
+  
+    console.log("1 The edited path: " + editedDataPath)
+    popupWindow.style.display = "none";
+      
+    }
+});
 
 
 
@@ -334,8 +351,6 @@ document.addEventListener("DOMContentLoaded", function() {
     editedDataPath = null;  // Clear editedDataPath after saving
 }
 
-
-
   // update timeline text area
   function updateTimelineDisplay() {
     const timelineTextAreaElem = document.getElementById("timelineTextArea");
@@ -358,15 +373,15 @@ document.addEventListener("DOMContentLoaded", function() {
   
         tableContent += `
         <tr>
-            <td>
+            <td style="width: 40%;">
                 <input list="dataPaths${index}" value="${dataItem.dataPath}" style="width: 80%;" oninput="updateDisplayedValue(this)">
                 <datalist id="dataPaths${index}">
                     ${options}
                 </datalist>
                 <div class="displayed-data-path">${dataItem.dataPath}</div> <!-- This is new -->
             </td>
-            <td contenteditable="true" class="text-left">${dataItem.exampleData || ''}</td>
-            <td>
+            <td contenteditable="true" class="text-left" style="width: 40%;">${dataItem.exampleData || ''}</td>
+            <td style="width: 20%;">
                 <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
             </td>
         </tr>
@@ -392,15 +407,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const newRow = `
       <tr>
-          <td>
+          <td style="width: 40%;">
               <input list="dataPaths${currentRowCount}" style="width: 80%;" oninput="updateDisplayedValue(this)">
               <datalist id="dataPaths${currentRowCount}">
                   ${options}
               </datalist>
               <div class="displayed-data-path"></div> <!-- This is new -->
           </td>
-          <td contenteditable="true" class="text-left"></td>
-          <td>
+          <td contenteditable="true" class="text-left" style="width: 40%;"></td>
+          <td style="width: 20%;">
               <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
           </td>
       </tr>
@@ -412,7 +427,6 @@ document.addEventListener("DOMContentLoaded", function() {
     tbody.appendChild(tempDiv.firstChild);
   }
 
-  
   // delete row from timeline json
   window.deleteRow = function(rowId) {
     delete timeline_data[rowId];

@@ -80,12 +80,12 @@
   </div>
   <br>
   
-    <div class="popupWindow" id="popupWindow">
-      <div class="popupContent">
-          <span id="closePopupBtn" style="cursor:pointer;float:right;">&times;</span>
-          <p id="popupContentText"></p>
-      </div>
-  </div>
+<div class="popupWindow" id="popupWindow">
+    <div class="popupContent">
+        <button class="btn" id="closePopupBtn" style="margin-bottom: 12px; float: right; margin-right: 30px;">Accept</button>
+        <p id="popupContentText"></p>
+    </div>
+</div>
 
 
   <div class="container content">
@@ -127,17 +127,15 @@
             <table class="table wrap-text-table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th style="width: 150px;">Data Path</th>
-                        <th style="width: 150px;">Example Data</th>
-                        <th style="width: 150px;">Actions</th>
+                        <th style="width: 40%;">Data Path</th>
+                        <th style="width: 40%;">Example Data</th>
+                        <th style="width: 20%;">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="linkedDataTableBody">
                 </tbody>
             </table>
 
-            
-            
             <button id="deleteDataItem" class="btn btn-outline-dark" onclick="resetLinkedData()" style="width: 80px;">Delete</button>
             
           </div>

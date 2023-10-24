@@ -1,20 +1,17 @@
 This is the manual version of the Ramsey Systems Exmaple Patient Creator programme. This si the second stable version of the programme - changes in UI, functionalities and JSON fstructure are going to be made in the future.
 
-Potential Future Things:
-- import bug with standards (random bug)
 
+BUGS:
+- import bug with standards (random bug)
+- bug when adding new row the value gets removed
+
+
+Potential Future Things:
 - move a row around
 - insert below
 
 - might want to add dropdown for number choice but also nah
 
 
-
-
 TO ADD:
-
-- current value showing in the table
-- need to change UI stuff :D
-   - need to be able to close without using X, need to change widths of the modal boxes, 
-
 - sheet value

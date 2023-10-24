@@ -269,22 +269,27 @@ document.getElementById('linkedDataTableBody').addEventListener('input', functio
 });
 
 closePopupBtn.addEventListener('click', function() {
-    if (currentInput) {
-        editedDataPath = currentInput.value;
+  if (currentInput) {
+      editedDataPath = currentInput.value;
 
-        const inputElements = popupContentText.querySelectorAll('input');
-        inputElements.forEach(input => {
-            editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
-        });
-        
-        // Update the displayed value after closing the popup
-        updateDisplayedValue(currentInput);
-        currentInput = null;  // Clear reference to the input box
-    }
+      const inputElements = popupContentText.querySelectorAll('input');
+      inputElements.forEach(input => {
+          editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
+      });
 
-    console.log("1 The edited path: " + editedDataPath)
-    popupWindow.style.display = "none";
+      // Set the modified value back to the combobox
+      currentInput.value = editedDataPath;
+
+      // Update the displayed value after setting the new value to the combobox
+      updateDisplayedValue(currentInput);
+
+      currentInput = null;  // Clear reference to the input box
+  }
+
+  console.log("1 The edited path: " + editedDataPath)
+  popupWindow.style.display = "none";
 });
+
 
 
 // Close the popup when clicking outside of it

@@ -3,15 +3,11 @@ This is the manual version of the Ramsey Systems Exmaple Patient Creator program
 
 BUGS:
 - import bug with standards (random bug)
-- bug when adding new row the value gets removed
-
 
 Potential Future Things:
 - move a row around
 - insert below
 
-- might want to add dropdown for number choice but also nah
-
 
 TO ADD:
-- sheet value
+- make it so that the thing goes below

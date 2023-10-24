@@ -244,20 +244,20 @@ let currentSelect; // This is to keep a reference to the select dropdown that tr
 let editedDataPath; // This will store the edited data path from the popup
 
 // Event delegation
-document.getElementById('linkedDataTableBody').addEventListener('change', function(event) {
-  if (event.target.tagName === "SELECT") {
+document.getElementById('linkedDataTableBody').addEventListener('input', function(event) {
+  if (event.target.tagName === "INPUT") {
       const selectedValue = event.target.value;
-      
+
       // Check if the selected value contains at least one set of '[]'
       const regex = /\[.*?\]/;
       if (regex.test(selectedValue)) {
           // Replace every "[]" with an input field
           const modifiedValue = selectedValue.split('[]').join('[<input type="text" style="margin: 0 5px; width: 30px;">]');
-          
+
           // Update the popup's content to the modified value
           popupContentText.innerHTML = modifiedValue;
 
-          currentSelect = event.target;
+          currentInput = event.target;  // Store reference to the current input box
 
           // Display the popup
           popupWindow.style.display = "block";
@@ -266,20 +266,21 @@ document.getElementById('linkedDataTableBody').addEventListener('change', functi
 });
 
 closePopupBtn.addEventListener('click', function() {
-    if (currentSelect) {
-        editedDataPath = currentSelect.value;
+    if (currentInput) {
+        editedDataPath = currentInput.value;
 
         const inputElements = popupContentText.querySelectorAll('input');
         inputElements.forEach(input => {
             editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
         });
         
-        currentSelect = null; 
+        currentInput = null;  // Clear reference to the input box
     }
 
     console.log("1 The edited path: " + editedDataPath)
     popupWindow.style.display = "none";
 });
+
 
 // Close the popup when clicking outside of it
 // window.addEventListener('click', function(event) {
@@ -299,10 +300,10 @@ closePopupBtn.addEventListener('click', function() {
 document.addEventListener("DOMContentLoaded", function() {
   const linkedDataModal = document.getElementById("editModal");
   const closeLinkedData = document.getElementById("closeLinkedData");
-  console.log("2 The edited path: " + editedDataPath)
 
   // save linked data to JSON
   function saveLinkedDataToJSON() {
+    console.log("4 The edited path: " + editedDataPath)
     const obj = timeline_data[currentRowId];
     const dropdown = document.getElementById('standardsDropdown');
     const selectedStandard = dropdown ? dropdown.value : null;
@@ -313,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function() {
       const cells = row.querySelectorAll("td");
       
       obj.linkedData.push({
-        dataPath: editedDataPath || cells[0].querySelector('select').value,
+        dataPath: editedDataPath || cells[0].querySelector('input').value,
         exampleData: cells[1].textContent
       });
     });
@@ -324,6 +325,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 
+
   // update timeline text area
   function updateTimelineDisplay() {
     const timelineTextAreaElem = document.getElementById("timelineTextArea");
@@ -332,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // populate pop up table when triggered
+  //render linked data modal
   function populateLinkedDataModal(rowId) {
     const obj = timeline_data[rowId];
     let tableContent = "";
@@ -341,15 +343,16 @@ document.addEventListener("DOMContentLoaded", function() {
         let options = "";
         const paths = standardsData[obj.standard]?.dataPaths || [];
         paths.forEach(path => {
-            options += `<option value="${path}"${dataItem.dataPath === path ? ' selected' : ''}>${path}</option>`;
+            options += `<option value="${path}">`;
         });
   
         tableContent += `
           <tr>
             <td>
-              <select>
+              <input list="dataPaths${index}" value="${dataItem.dataPath}">
+              <datalist id="dataPaths${index}">
                 ${options}
-              </select>
+              </datalist>
             </td>
             <td contenteditable="true" class="text-left">${dataItem.exampleData || ''}</td>
             <td>
@@ -362,31 +365,27 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("linkedDataTableBody").innerHTML = tableContent;
   }
 
-  //add blank row to pop up table
+  // add row to linked data modal
   window.addLinkedDataRow = function() {
     console.log("Adding blank linked data row")
 
     const selectedStandard = document.getElementById('standardsDropdown').value;
-    // console.log("standardDataPaths:", standardsData);
-    // console.log("selectedStandard:", selectedStandard);
-
-    //WOMAN WHAT IS THIS M8
     const defaultPaths = standardsData[selectedStandard]?.dataPaths || [];
-
     console.log("defaultPaths" + defaultPaths)
     let options = "";
     defaultPaths.forEach(path => {
-      options += `<option value="${path}">${path}</option>`;
+      options += `<option value="${path}">`;
     });
 
-    // console.log("options here" + options)
-  
+    const currentRowCount = document.querySelectorAll('#linkedDataTableBody tr').length;
+
     const newRow = `
       <tr>
         <td>
-          <select style="max-width: 80%;">
+          <input list="dataPaths${currentRowCount}" style="max-width: 80%;">
+          <datalist id="dataPaths${currentRowCount}">
             ${options}
-          </select>
+          </datalist>
         </td>
         <td contenteditable="true" class="text-left"></td>
         <td>
@@ -394,13 +393,14 @@ document.addEventListener("DOMContentLoaded", function() {
         </td>
       </tr>
     `;
-  
+
     document.getElementById("linkedDataTableBody").innerHTML += newRow;
     const tbody = document.getElementById("linkedDataTableBody");
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = newRow;
     tbody.appendChild(tempDiv.firstChild);
   }
+
   
   // delete row from timeline json
   window.deleteRow = function(rowId) {
@@ -451,6 +451,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // close pop up table
   closeLinkedData.onclick = function() {
+    console.log("The pop up is now closed.")
     linkedDataModal.style.display = "none";
     saveLinkedDataToJSON();
     updateTimelineDisplay();

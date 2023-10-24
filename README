@@ -6,28 +6,13 @@ Potential Future Things:
 - move a row around
 - insert below
 
+- might want to add dropdown for number choice but also nah
 
 
 
 
-To Do:
+TO ADD:
+- combo box
+- current value showing in the table
 
-- really need a way to search for the user and not just a dropdown 
-
-- maybe or maybe not combobox
-- need to be able to search for easier usability
-- look for how many square brackets there are, add text boxes for each one
-
-
-
-- search for datapath
-- if have square, then have a pop up
-- have options for dropdown of umber for datapath
-
-
-
-- change to a combo box for search
-- need to make the pop up have text boxes for the square bracket numbers
-
-- really need to change the layout for timeline pop up (need to make smaller/ larger)
-- also need to make the dropdown value set to certain size, but alo were removing the dropdown so egh
+- sheet value

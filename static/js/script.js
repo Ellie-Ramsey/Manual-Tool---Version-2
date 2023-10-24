@@ -261,6 +261,9 @@ document.getElementById('linkedDataTableBody').addEventListener('input', functio
 
           // Display the popup
           popupWindow.style.display = "block";
+      } else {
+          // Update the displayed value if it doesn't contain '[]'
+          updateDisplayedValue(event.target);
       }
   }
 });
@@ -274,6 +277,8 @@ closePopupBtn.addEventListener('click', function() {
             editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
         });
         
+        // Update the displayed value after closing the popup
+        updateDisplayedValue(currentInput);
         currentInput = null;  // Clear reference to the input box
     }
 
@@ -347,19 +352,20 @@ document.addEventListener("DOMContentLoaded", function() {
         });
   
         tableContent += `
-          <tr>
+        <tr>
             <td>
-              <input list="dataPaths${index}" value="${dataItem.dataPath}">
-              <datalist id="dataPaths${index}">
-                ${options}
-              </datalist>
+                <input list="dataPaths${index}" value="${dataItem.dataPath}" style="width: 80%;" oninput="updateDisplayedValue(this)">
+                <datalist id="dataPaths${index}">
+                    ${options}
+                </datalist>
+                <div class="displayed-data-path">${dataItem.dataPath}</div> <!-- This is new -->
             </td>
             <td contenteditable="true" class="text-left">${dataItem.exampleData || ''}</td>
             <td>
-              <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
+                <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
             </td>
-          </tr>
-        `;
+        </tr>
+    `;
       });
     }
     document.getElementById("linkedDataTableBody").innerHTML = tableContent;
@@ -381,19 +387,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const newRow = `
       <tr>
-        <td>
-          <input list="dataPaths${currentRowCount}" style="max-width: 80%;">
-          <datalist id="dataPaths${currentRowCount}">
-            ${options}
-          </datalist>
-        </td>
-        <td contenteditable="true" class="text-left"></td>
-        <td>
-          <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
-        </td>
+          <td>
+              <input list="dataPaths${currentRowCount}" style="width: 80%;" oninput="updateDisplayedValue(this)">
+              <datalist id="dataPaths${currentRowCount}">
+                  ${options}
+              </datalist>
+              <div class="displayed-data-path"></div> <!-- This is new -->
+          </td>
+          <td contenteditable="true" class="text-left"></td>
+          <td>
+              <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
+          </td>
       </tr>
-    `;
-
+  `;
     document.getElementById("linkedDataTableBody").innerHTML += newRow;
     const tbody = document.getElementById("linkedDataTableBody");
     const tempDiv = document.createElement('div');
@@ -449,9 +455,16 @@ document.addEventListener("DOMContentLoaded", function() {
     updateTimelineDisplay();
   }
 
+  // update value below combobox when user changes it
+  window.updateDisplayedValue = function(inputElem) {
+    const displayedDataPathElem = inputElem.parentElement.querySelector('.displayed-data-path');
+    if (displayedDataPathElem) {
+        displayedDataPathElem.textContent = inputElem.value;
+    }
+}
+
   // close pop up table
   closeLinkedData.onclick = function() {
-    console.log("The pop up is now closed.")
     linkedDataModal.style.display = "none";
     saveLinkedDataToJSON();
     updateTimelineDisplay();

@@ -390,7 +390,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("linkedDataTableBody").innerHTML = tableContent;
   }
   
-
   // add row to linked data modal
   window.addLinkedDataRow = function() {
     const selectedStandard = document.getElementById('standardsDropdown').value;
@@ -423,7 +422,6 @@ document.addEventListener("DOMContentLoaded", function() {
     tbody.appendChild(tempDiv.firstChild);
   }
   
-
   // delete row from timeline json
   window.deleteRow = function(rowId) {
     delete timeline_data[rowId];

@@ -524,9 +524,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // standards file import
   document.getElementById('standardsFileLoadButton').addEventListener('change', function(e) {
+  
     console.log("File change event triggered");
     const files = e.target.files;
     if (!files.length) return;
+    console.log("Number of files: " + files.length)
+    console.log("Name of files (in import): " + files)
     
     Array.from(files).forEach((file, fileIndex) => {
       const reader = new FileReader();
@@ -536,21 +539,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Using file name as standard name (removing .json extension)
           const standardName = file.name.replace('.json', '');
-          
+          console.log(standardName)
+
           if(standardName) {
               standardsData[standardName] = {
                   dataPaths: contents.filter(Boolean) // Remove any falsy values from the data paths (like empty strings)
               };
           }
 
-          // If it's the last file, update the dropdown
-          if(fileIndex === files.length-1) {
-              populateStandardsDropdown(Object.keys(standardsData));
-              // console.log("Standards Data:", standardsData);
-          }
+          console.log(Object.keys(standardsData));
+
+          populateStandardsDropdown(Object.keys(standardsData));
+          
       };
       reader.readAsText(file); // We still read as text but then parse the result as JSON
-    });
+    });  
 });
 
 // delete timeline table row

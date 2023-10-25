@@ -2,12 +2,9 @@ This is the manual version of the Ramsey Systems Exmaple Patient Creator program
 
 
 BUGS:
-- import bug with standards (random bug)
+- import bug with standards (really need to fix)
 
 Potential Future Things:
 - move a row around
 - insert below
 
-
-TO ADD:
-- make it so that the thing goes below

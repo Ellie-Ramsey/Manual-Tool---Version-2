@@ -269,6 +269,7 @@ document.getElementById('linkedDataTableBody').addEventListener('input', functio
 });
 
 closePopupBtn.addEventListener('click', function() {
+  console.log("Close button clicked")
   if (currentInput) {
       editedDataPath = currentInput.value;
 
@@ -401,8 +402,8 @@ document.addEventListener("DOMContentLoaded", function() {
   
     const currentRowCount = document.querySelectorAll('#linkedDataTableBody tr').length;
   
-    const newRow = `
-      <tr>
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
           <td style="width: 40%;">
               <input list="dataPaths${currentRowCount}" style="width: 90%;">
               <datalist id="dataPaths${currentRowCount}">
@@ -413,15 +414,10 @@ document.addEventListener("DOMContentLoaded", function() {
           <td style="width: 20%;">
               <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
           </td>
-      </tr>
-    `;
-    document.getElementById("linkedDataTableBody").innerHTML += newRow;
-    const tbody = document.getElementById("linkedDataTableBody");
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = newRow;
-    tbody.appendChild(tempDiv.firstChild);
-  }
-  
+      `;
+    document.getElementById("linkedDataTableBody").appendChild(newRow);
+};
+
   // delete row from timeline json
   window.deleteRow = function(rowId) {
     delete timeline_data[rowId];
@@ -469,13 +465,13 @@ document.addEventListener("DOMContentLoaded", function() {
     updateTimelineDisplay();
   }
 
-//   // update value below combobox when user changes it
-//   window.updateDisplayedValue = function(inputElem) {
-//     const displayedDataPathElem = inputElem.parentElement.querySelector('.displayed-data-path');
-//     if (displayedDataPathElem) {
-//         displayedDataPathElem.textContent = inputElem.value;
-//     }
-// }
+//   // update combobox when user changes it
+  window.updateDisplayedValue = function(inputElem) {
+    const displayedDataPathElem = inputElem.parentElement.querySelector('.displayed-data-path');
+    if (displayedDataPathElem) {
+        displayedDataPathElem.textContent = inputElem.value;
+    }
+}
 
   // close pop up table
   closeLinkedData.onclick = function() {

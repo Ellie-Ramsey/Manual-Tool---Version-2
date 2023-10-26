@@ -217,24 +217,6 @@ function transformMainTimeline(original) {
   return result;
 }
 
-//generate linked data files
-// function generateLinkedDataFiles(original) {
-//   let files = {};
-
-//   for (let key in original) {
-//     let item = original[key];
-//     if (item.linkedData && item.linkedData.length > 0) {
-//       let filename = `linkedData_${item.id}.json`;
-//       let linkedDataArray = [{ standard: item.standard }, ...item.linkedData];
-//       files[filename] = linkedDataArray;
-//     }
-//   }
-
-//   return files;
-// }
-
-
-
 // code for data path pop up
 const popupWindow = document.getElementById('popupWindow');
 const closePopupBtn = document.getElementById('closePopupBtn');
@@ -271,56 +253,53 @@ document.getElementById('linkedDataTableBody').addEventListener('input', functio
 closePopupBtn.addEventListener('click', function() {
   console.log("Close button clicked")
   if (currentInput) {
-      editedDataPath = currentInput.value;
+    editedDataPath = currentInput.value;
 
-      const inputElements = popupContentText.querySelectorAll('input');
-      inputElements.forEach(input => {
-          editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
-      });
+    const inputElements = popupContentText.querySelectorAll('input');
+    inputElements.forEach(input => {
+      editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
+    });
 
-      // Set the modified value back to the combobox
-      currentInput.value = editedDataPath;
+    // Store the edited data path on the input element
+    currentInput.dataset.editedDataPath = editedDataPath;
 
-      // Update the displayed value after setting the new value to the combobox
-      updateDisplayedValue(currentInput);
+    // Update the displayed value after setting the new value to the combobox
+    updateDisplayedValue(currentInput);
 
-      currentInput = null;  // Clear reference to the input box
+    currentInput = null;  // Clear reference to the input box
   }
 
-  console.log("1 The edited path: " + editedDataPath)
+  console.log("1.1 The edited path: " + editedDataPath)
+  console.log("Current data:" + JSON.stringify(timeline_data, null, 2));
   popupWindow.style.display = "none";
 });
 
 // Close the popup when clicking outside of it
-window.addEventListener('click', function(event) {
-    if (event.target === popupWindow) {
-      if (currentInput) {
-        editedDataPath = currentInput.value;
+// window.addEventListener('click', function(event) {
+//     if (event.target === popupWindow) {
+//       if (currentInput) {
+//         editedDataPath = currentInput.value;
   
-        const inputElements = popupContentText.querySelectorAll('input');
-        inputElements.forEach(input => {
-            editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
-        });
+//         const inputElements = popupContentText.querySelectorAll('input');
+//         inputElements.forEach(input => {
+//             editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
+//         });
   
-        // Set the modified value back to the combobox
-        currentInput.value = editedDataPath;
+//         // Set the modified value back to the combobox
+//         currentInput.value = editedDataPath;
   
-        // Update the displayed value after setting the new value to the combobox
-        updateDisplayedValue(currentInput);
+//         // Update the displayed value after setting the new value to the combobox
+//         updateDisplayedValue(currentInput);
   
-        currentInput = null;  // Clear reference to the input box
-    }
+//         currentInput = null;  // Clear reference to the input box
+//     }
   
-    console.log("1 The edited path: " + editedDataPath)
-    popupWindow.style.display = "none";
+//     console.log("1.2 The edited path: " + editedDataPath)
+//     console.log("Current data:" + JSON.stringify(timeline_data, null, 2));
+//     popupWindow.style.display = "none";
       
-    }
-});
-
-
-
-
-
+//     }
+// });
 
 
 
@@ -331,26 +310,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // save linked data to JSON
   function saveLinkedDataToJSON() {
-    console.log("4 The edited path: " + editedDataPath)
     const obj = timeline_data[currentRowId];
     const dropdown = document.getElementById('standardsDropdown');
     const selectedStandard = dropdown ? dropdown.value : null;
-
+  
     obj.linkedData = [];  // Resetting linkedData to an empty array
     const rows = document.querySelectorAll("#linkedDataTableBody tr");
     rows.forEach(row => {
       const cells = row.querySelectorAll("td");
-      
+      const inputDataPath = cells[0].querySelector('input');
+      const editedDataPath = inputDataPath.dataset.editedDataPath || inputDataPath.value;
+  
       obj.linkedData.push({
-        dataPath: editedDataPath || cells[0].querySelector('input').value,
+        dataPath: editedDataPath,
         exampleData: cells[1].textContent
       });
+  
+      // Clear the edited data path after saving
+      delete inputDataPath.dataset.editedDataPath;
     });
     
-    console.log("3 The edited path: " + editedDataPath)
     obj.standard = selectedStandard;  // Setting the standard
-    editedDataPath = null;  // Clear editedDataPath after saving
-}
+  }
+  
 
   // update timeline text area
   function updateTimelineDisplay() {

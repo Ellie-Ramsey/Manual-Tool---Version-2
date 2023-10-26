@@ -152,7 +152,7 @@ function updateTimelineDisplay() {
   document.getElementById('timelineTextArea').textContent = JSON.stringify(timeline_data, null, 2);
 }
 
-//export timeline code
+//export all code
 function downloadJSON(data, filename) {
   const jsonData = JSON.stringify(data, null, 2);
   const blob = new Blob([jsonData], { type: 'application/json' });
@@ -469,13 +469,13 @@ document.addEventListener("DOMContentLoaded", function() {
     updateTimelineDisplay();
   }
 
-  // update value below combobox when user changes it
-  window.updateDisplayedValue = function(inputElem) {
-    const displayedDataPathElem = inputElem.parentElement.querySelector('.displayed-data-path');
-    if (displayedDataPathElem) {
-        displayedDataPathElem.textContent = inputElem.value;
-    }
-}
+//   // update value below combobox when user changes it
+//   window.updateDisplayedValue = function(inputElem) {
+//     const displayedDataPathElem = inputElem.parentElement.querySelector('.displayed-data-path');
+//     if (displayedDataPathElem) {
+//         displayedDataPathElem.textContent = inputElem.value;
+//     }
+// }
 
   // close pop up table
   closeLinkedData.onclick = function() {

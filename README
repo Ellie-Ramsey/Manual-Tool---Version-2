@@ -4,7 +4,12 @@ This is the manual version of the Ramsey Systems Exmaple Patient Creator program
 BUGS:
 - import bug with standards (really need to fix)
 
+- sort the issue with the patient import meaning that the combobox doesn't work at all for searching
+- need to stop the ones above being deleted when another is being added
+
 Potential Future Things:
+- look at for app engine, need to have a way to save name user specific
+
 - move a row around
 - insert below
 

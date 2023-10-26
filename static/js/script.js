@@ -275,31 +275,31 @@ closePopupBtn.addEventListener('click', function() {
 });
 
 // Close the popup when clicking outside of it
-// window.addEventListener('click', function(event) {
-//     if (event.target === popupWindow) {
-//       if (currentInput) {
-//         editedDataPath = currentInput.value;
+window.addEventListener('click', function(event) {
+    if (event.target === popupWindow) {
+      if (currentInput) {
+        editedDataPath = currentInput.value;
+    
+        const inputElements = popupContentText.querySelectorAll('input');
+        inputElements.forEach(input => {
+          editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
+        });
+    
+        // Store the edited data path on the input element
+        currentInput.dataset.editedDataPath = editedDataPath;
+    
+        // Update the displayed value after setting the new value to the combobox
+        updateDisplayedValue(currentInput);
+    
+        currentInput = null;  // Clear reference to the input box
+      }
   
-//         const inputElements = popupContentText.querySelectorAll('input');
-//         inputElements.forEach(input => {
-//             editedDataPath = editedDataPath.replace('[]', '[' + input.value + ']');
-//         });
-  
-//         // Set the modified value back to the combobox
-//         currentInput.value = editedDataPath;
-  
-//         // Update the displayed value after setting the new value to the combobox
-//         updateDisplayedValue(currentInput);
-  
-//         currentInput = null;  // Clear reference to the input box
-//     }
-  
-//     console.log("1.2 The edited path: " + editedDataPath)
-//     console.log("Current data:" + JSON.stringify(timeline_data, null, 2));
-//     popupWindow.style.display = "none";
+    console.log("1.2 The edited path: " + editedDataPath)
+    console.log("Current data:" + JSON.stringify(timeline_data, null, 2));
+    popupWindow.style.display = "none";
       
-//     }
-// });
+    }
+});
 
 
 

@@ -83,12 +83,12 @@ function handleFileImport(event) {
             }
         }
           
-          console.log("Story Data Updated:", story_data);
+          // console.log("Story Data Updated:", story_data);
           updateStoryDisplay();
           updateStoryTable();
 
 
-          console.log("Story Text Area should have updated");
+          // console.log("Story Text Area should have updated");
 
           // Populate timeline_data
           timeline_data = {};
@@ -96,7 +96,7 @@ function handleFileImport(event) {
             timeline_data[index] = item;
           });
 
-          console.log("Timeline Data Imported:", timeline_data);
+          // console.log("Timeline Data Imported:", timeline_data);
           
           renderTimelineTable();
           updateTimelineDisplay(); // This function should refresh your display based on the new timeline_data
@@ -134,7 +134,7 @@ function updateStoryTable() {
 
 //story story_data variable update
 document.getElementById("storyTableBody").addEventListener('input', function (e) {
-  console.log("update story data")
+  // console.log("update story data")
   if (e.target && e.target.nodeName === "TD") {
       const row = e.target.closest('tr');
       const key = row.getAttribute('data-key');
@@ -188,7 +188,7 @@ function renderTimelineTable() {
 
 //standards dropdown populate
 function populateStandardsDropdown(standards) {
-  console.log("Populating Standards: ", standards);
+  // console.log("Populating Standards: ", standards);
   const dropdown = document.getElementById('standardsDropdown');
   dropdown.innerHTML = "";
   standards.forEach((standard, index) => {
@@ -218,20 +218,20 @@ function transformMainTimeline(original) {
 }
 
 //generate linked data files
-function generateLinkedDataFiles(original) {
-  let files = {};
+// function generateLinkedDataFiles(original) {
+//   let files = {};
 
-  for (let key in original) {
-    let item = original[key];
-    if (item.linkedData && item.linkedData.length > 0) {
-      let filename = `linkedData_${item.id}.json`;
-      let linkedDataArray = [{ standard: item.standard }, ...item.linkedData];
-      files[filename] = linkedDataArray;
-    }
-  }
+//   for (let key in original) {
+//     let item = original[key];
+//     if (item.linkedData && item.linkedData.length > 0) {
+//       let filename = `linkedData_${item.id}.json`;
+//       let linkedDataArray = [{ standard: item.standard }, ...item.linkedData];
+//       files[filename] = linkedDataArray;
+//     }
+//   }
 
-  return files;
-}
+//   return files;
+// }
 
 
 
@@ -465,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateTimelineDisplay();
   }
 
-//   // update combobox when user changes it
+//  update combobox when user changes it
   window.updateDisplayedValue = function(inputElem) {
     const displayedDataPathElem = inputElem.parentElement.querySelector('.displayed-data-path');
     if (displayedDataPathElem) {
@@ -595,17 +595,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // update pop up table when standard changes
   document.getElementById('standardsDropdown').addEventListener('change', function(event) {
-
     const selectedStandard = event.target.value;
     const paths = standardsData[selectedStandard]?.dataPaths || [];
     console.log("Selected Standard:", selectedStandard);
-    console.log("Paths:", paths);
-
-    document.querySelectorAll('#linkedDataTableBody select').forEach(selectElement => {
-        selectElement.innerHTML = paths.map(path => `<option value="${path}">${path}</option>`).join('');
+  
+    document.querySelectorAll('#linkedDataTableBody tr').forEach((row, index) => {
+      const input = row.querySelector('input');
+      const dataListId = input.getAttribute('list');
+      const dataList = document.getElementById(dataListId);
+  
+      if (dataList) {
+        dataList.innerHTML = paths.map(path => `<option value="${path}">${path}</option>`).join('');
+      }
     });
-
+  
     saveLinkedDataToJSON();
     updateTimelineDisplay();
   });
+  
+
+
 });

@@ -2,7 +2,10 @@ This is the manual version of the Ramsey Systems Exmaple Patient Creator program
 
 
 BUGS:
-- sort the issue with the patient import meaning that the combobox doesn't work at all for searching
+Import: needs to be a dataPath
+
+- issue with changing to other dataPaths
+
 
 Potential Future Things:
 - look at for app engine, need to have a way to save name user specific

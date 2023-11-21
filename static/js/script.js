@@ -250,6 +250,7 @@ document.getElementById('linkedDataTableBody').addEventListener('input', functio
   }
 });
 
+// close pop up when press button
 closePopupBtn.addEventListener('click', function() {
   console.log("Close button clicked")
   if (currentInput) {
@@ -594,7 +595,5 @@ document.addEventListener("DOMContentLoaded", function() {
     saveLinkedDataToJSON();
     updateTimelineDisplay();
   });
-  
-
 
 });

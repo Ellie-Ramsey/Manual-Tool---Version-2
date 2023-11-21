@@ -174,7 +174,7 @@ function renderTimelineTable() {
         <td data-key="time" contenteditable="true" class="text-left">${rowData.time}</td>
         <td data-key="event" contenteditable="true" class="text-left">${rowData.event}</td>
         <td>
-          <button id="dataItemBtn-${id}" onclick="toggleDataItem(${id})">${rowData.linkedData.length > 0 ? 'Edit' : 'Add'}</button>
+          <button id="dataItemBtn-${id}" onclick="toggleDataItem(${id})">${rowData.linked_data.length > 0 ? 'Edit' : 'Add'}</button>
         </td>
         <td>
           <button class="btn btn-danger delete-row">Delete</button>
@@ -208,7 +208,7 @@ function transformMainTimeline(original) {
     let transformed = {
       time: item.time,
       event: item.event,
-      sheet: item.linkedData && item.linkedData.length > 0 ? item.id.toString() : "None"
+      sheet: item.linked_data && item.linked_data.length > 0 ? item.id.toString() : "None"
     };
 
     result.push(transformed);
@@ -226,7 +226,7 @@ let currentSelect; // This is to keep a reference to the select dropdown that tr
 let editedDataPath; // This will store the edited data path from the popup
 
 // Event delegation
-document.getElementById('linkedDataTableBody').addEventListener('input', function(event) {
+document.getElementById('linked_dataTableBody').addEventListener('input', function(event) {
   if (event.target.tagName === "INPUT") {
       const selectedValue = event.target.value;
 
@@ -306,23 +306,23 @@ window.addEventListener('click', function(event) {
 
 //timeline main DOM
 document.addEventListener("DOMContentLoaded", function() {
-  const linkedDataModal = document.getElementById("editModal");
-  const closeLinkedData = document.getElementById("closeLinkedData");
+  const linked_dataModal = document.getElementById("editModal");
+  const closelinked_data = document.getElementById("closelinked_data");
 
   // save linked data to JSON
-  function saveLinkedDataToJSON() {
+  function savelinked_dataToJSON() {
     const obj = timeline_data[currentRowId];
     const dropdown = document.getElementById('standardsDropdown');
     const selectedStandard = dropdown ? dropdown.value : null;
   
-    obj.linkedData = [];  // Resetting linkedData to an empty array
-    const rows = document.querySelectorAll("#linkedDataTableBody tr");
+    obj.linked_data = [];  // Resetting linked_data to an empty array
+    const rows = document.querySelectorAll("#linked_dataTableBody tr");
     rows.forEach(row => {
       const cells = row.querySelectorAll("td");
       const inputDataPath = cells[0].querySelector('input');
       const editedDataPath = inputDataPath.dataset.editedDataPath || inputDataPath.value;
   
-      obj.linkedData.push({
+      obj.linked_data.push({
         dataPath: editedDataPath,
         exampleData: cells[1].textContent
       });
@@ -344,11 +344,11 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   //render linked data modal
-  function populateLinkedDataModal(rowId) {
+  function populatelinked_dataModal(rowId) {
     const obj = timeline_data[rowId];
     let tableContent = "";
-    if (obj && obj.linkedData) {
-      obj.linkedData.forEach((dataItem, index) => {
+    if (obj && obj.linked_data) {
+      obj.linked_data.forEach((dataItem, index) => {
         let options = "";
         const paths = standardsData[obj.standard]?.dataPaths || [];
         paths.forEach(path => {
@@ -365,17 +365,17 @@ document.addEventListener("DOMContentLoaded", function() {
               </td>
               <td contenteditable="true" class="text-left" style="width: 40%;">${dataItem.exampleData || ''}</td>
               <td style="width: 20%;">
-                  <button class="btn btn-danger" onclick="deleteLinkedDataRow(this, ${index})">Delete</button>
+                  <button class="btn btn-danger" onclick="deletelinked_dataRow(this, ${index})">Delete</button>
               </td>
           </tr>
         `;
       });
     }
-    document.getElementById("linkedDataTableBody").innerHTML = tableContent;
+    document.getElementById("linked_dataTableBody").innerHTML = tableContent;
   }
   
   // add row to linked data modal
-  window.addLinkedDataRow = function() {
+  window.addlinked_dataRow = function() {
     const selectedStandard = document.getElementById('standardsDropdown').value;
     const defaultPaths = standardsData[selectedStandard]?.dataPaths || [];
     let options = "";
@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function() {
       options += `<option value="${path}">`;
     });
   
-    const currentRowCount = document.querySelectorAll('#linkedDataTableBody tr').length;
+    const currentRowCount = document.querySelectorAll('#linked_dataTableBody tr').length;
   
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
@@ -395,10 +395,10 @@ document.addEventListener("DOMContentLoaded", function() {
           </td>
           <td contenteditable="true" class="text-left" style="width: 40%;"></td>
           <td style="width: 20%;">
-              <button class="btn btn-danger" onclick="deleteLinkedDataRow(this)">Delete</button>
+              <button class="btn btn-danger" onclick="deletelinked_dataRow(this)">Delete</button>
           </td>
       `;
-    document.getElementById("linkedDataTableBody").appendChild(newRow);
+    document.getElementById("linked_dataTableBody").appendChild(newRow);
 };
 
   // delete row from timeline json
@@ -412,17 +412,17 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // reset linked data when deleted
-  window.resetLinkedData = function() {
+  window.resetlinked_data = function() {
     const obj = timeline_data[currentRowId];
     if (obj) {
-      obj.linkedData = [];
+      obj.linked_data = [];
       delete obj.standard;
     }
     const btn = document.getElementById("dataItemBtn-" + currentRowId);
     if (btn) {
       btn.innerText = "Add";
     }
-    linkedDataModal.style.display = "none";
+    linked_dataModal.style.display = "none";
     updateTimelineDisplay();
   }
 
@@ -432,8 +432,8 @@ document.addEventListener("DOMContentLoaded", function() {
     if (btn.innerText === "Add" || btn.innerText === "Edit") {
       btn.innerText = "Edit";
       currentRowId = rowId;
-      linkedDataModal.style.display = "block"; 
-      populateLinkedDataModal(rowId);
+      linked_dataModal.style.display = "block"; 
+      populatelinked_dataModal(rowId);
     } else {
       btn.innerText = "Add";
       currentRowId = null;
@@ -441,10 +441,10 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // delete row from pop up table
-  window.deleteLinkedDataRow = function(buttonElem, index) {
+  window.deletelinked_dataRow = function(buttonElem, index) {
     buttonElem.parentElement.parentElement.remove();
-    timeline_data[currentRowId].linkedData.splice(index, 1);  // Remove the corresponding object from linkedData
-    saveLinkedDataToJSON();
+    timeline_data[currentRowId].linked_data.splice(index, 1);  // Remove the corresponding object from linked_data
+    savelinked_dataToJSON();
     updateTimelineDisplay();
   }
 
@@ -457,18 +457,18 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
   // close pop up table
-  closeLinkedData.onclick = function() {
-    linkedDataModal.style.display = "none";
-    saveLinkedDataToJSON();
+  closelinked_data.onclick = function() {
+    linked_dataModal.style.display = "none";
+    savelinked_dataToJSON();
     updateTimelineDisplay();
   }
   
   // close pop up table when clicked outside
-  linkedDataModal.addEventListener("click", function(event) {
-    if (event.target === linkedDataModal) {
-      saveLinkedDataToJSON();
+  linked_dataModal.addEventListener("click", function(event) {
+    if (event.target === linked_dataModal) {
+      savelinked_dataToJSON();
       updateTimelineDisplay();
-      linkedDataModal.style.display = "none";
+      linked_dataModal.style.display = "none";
     }
   });
 
@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", function() {
       time: "",
       event: "",
       standard: null,
-      linkedData: []
+      linked_data: []
     };
     
     const newRow = `
@@ -562,16 +562,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // when linkeddatatable is no longer a fous, update JSON and timeline display
-  document.getElementById("linkedDataTableBody").addEventListener("blur", function(event) {
-    saveLinkedDataToJSON();
+  // when linked_datatable is no longer a fous, update JSON and timeline display
+  document.getElementById("linked_dataTableBody").addEventListener("blur", function(event) {
+    savelinked_dataToJSON();
     updateTimelineDisplay();
   }, true);
 
   // update pop up table when standard changes IDK
-  document.getElementById("linkedDataTableBody").addEventListener("change", function(event) {
+  document.getElementById("linked_dataTableBody").addEventListener("change", function(event) {
     if (event.target && event.target.matches(".standard-dropdown")) {
-      saveLinkedDataToJSON();
+      savelinked_dataToJSON();
       updateTimelineDisplay();
     }
   }, true);
@@ -582,7 +582,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const paths = standardsData[selectedStandard]?.dataPaths || [];
     console.log("Selected Standard:", selectedStandard);
   
-    document.querySelectorAll('#linkedDataTableBody tr').forEach((row, index) => {
+    document.querySelectorAll('#linked_dataTableBody tr').forEach((row, index) => {
       const input = row.querySelector('input');
       const dataListId = input.getAttribute('list');
       const dataList = document.getElementById(dataListId);
@@ -592,7 +592,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   
-    saveLinkedDataToJSON();
+    savelinked_dataToJSON();
     updateTimelineDisplay();
   });
 

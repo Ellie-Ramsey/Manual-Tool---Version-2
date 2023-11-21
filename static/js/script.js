@@ -42,7 +42,7 @@ function exportAllJSON() {
   // Combine the two data structures
   let combinedData = {
     ...story_data,
-    "time_line": Object.values(timeline_data) // Convert timeline_data from an object to an array
+    "timeline": Object.values(timeline_data) // Convert timeline_data from an object to an array
   };
 
   // Convert the combined data to a JSON string with formatting
@@ -92,7 +92,7 @@ function handleFileImport(event) {
 
           // Populate timeline_data
           timeline_data = {};
-          importedData.time_line.forEach((item, index) => {
+          importedData.timeline.forEach((item, index) => {
             timeline_data[index] = item;
           });
 
